@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: org.metable.trek
+Bundle-ManifestVersion: 2
+Bundle-Name: org.metable.trek
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.metable.trek; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.16.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.common,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Export-Package: org.metable.trek.serializer,
+ org.metable.trek.parser.antlr.internal,
+ org.metable.trek.trek.impl,
+ org.metable.trek.parser.antlr,
+ org.metable.trek.validation,
+ org.metable.trek.generator,
+ org.metable.trek.trek,
+ org.metable.trek,
+ org.metable.trek.services,
+ org.metable.trek.scoping,
+ org.metable.trek.trek.util
+Import-Package: org.apache.log4j

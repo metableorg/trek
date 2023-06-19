@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: org.metable.trek.ide
+Bundle-ManifestVersion: 2
+Bundle-Name: org.metable.trek.ide
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.metable.trek.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.metable.trek,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Export-Package: org.metable.trek.ide.contentassist.antlr,
+ org.metable.trek.ide.contentassist.antlr.internal
