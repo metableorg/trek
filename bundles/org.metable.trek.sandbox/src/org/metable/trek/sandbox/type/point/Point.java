@@ -1,3 +1,39 @@
+/**
+ * <code> 
+ * 
+ *  type Point {
+ *  
+ *      rep Cartesian {
+ *          double x;
+ *          double y;
+ *      }
+ *      
+ *      rep Polar {
+ *          double rho;
+ *          double theta;
+ *          
+ *          constraint {
+ *              theta >= 0.0 && theta <= 360.0;
+ *          }
+ *      }
+ *      
+ *      Cartesian from Polar {
+ *          x = rho * cos(theta);
+ *          y = rho * sin(theta);
+ *      }
+ *      
+ *      Polar from Cartesian {
+ *          rho = sqrt((x * x) + (y * y));
+ *          theta = arctan(y/x);
+ *      }
+ *      
+ *      init {
+ *          Cartesian(0, 0);
+ *      }
+ *  }
+ *  
+ *  </code>
+ */
 package org.metable.trek.sandbox.type.point;
 
 import org.metable.trek.sandbox.type.Alpha;

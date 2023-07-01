@@ -6,42 +6,65 @@ import org.metable.trek.sandbox.type.point.Point;
 /**
  * <code> 
  * 
+ * // Type definition.
  * type Ellipse {
- *     rep {double a; double b; Point ctr constraint {a >= b;}}
- *     init {a = 10; b = 5; ctr = Cartesian(0, 0);}}
+ * 
+ *     // Possible representation with default name 'Ellipse'.
+ *     rep {
+ *         double a;
+ *         double b;
+ *         Point ctr;
+ *        
+ *         // Constraint definition. A boolean expression that
+ *         // is a function of this possible representation's attributes
+ *         // only.
+ *         //  
+ *         // At least one attribute must be used in this expression.
+ *         constraint {
+ *             a >= b;
+ *         }
+ *     }
+ *    
+ *     // Default value. 
+ *     init {
+ *         Ellipse(10, 5, Cartesian(0, 0);
+ *     }
+ * }
+ *     
  * </code>
+ */
+
+/**
+ * Interface Ellipse  
  */
 public interface Ellipse extends Alpha {
 
-    public static Ellipse ellipse() {
-        EllipseImpl ellipse = new EllipseImpl();
-
-        ellipse.rep = new EllipseImpl.Rep(10, 5, Point.cartesian(0, 0));
-
-        return ellipse;
-    }
-
+    // The Ellipse possible representation selector.
     public static Ellipse ellipse(double a, double b, Point ctr) {
 
         EllipseImpl ellipse = new EllipseImpl();
 
-        ellipse.rep = new EllipseImpl.Rep(a, b, ctr);
+        ellipse.rep = new EllipseImpl.Ellipse(a, b, ctr);
 
         assert (isEllipse(ellipse.rep.a, ellipse.rep.b));
 
         return ellipse;
     }
 
-    public static Ellipse ellipse(Ellipse other) {
-        EllipseImpl ellipse = new EllipseImpl();
-
-        ellipse.rep = new EllipseImpl.Rep(other.getA(), other.getB(), other.getCtr());
-
-        return ellipse;
+    // Default Ellipse possible representation selector.
+    public static Ellipse ellipse() {
+        return ellipse(10, 5, Point.cartesian(0, 0));
     }
 
+
+    // Copy Ellipse selector.
+    public static Ellipse ellipse(Ellipse other) {
+        return ellipse(other.getA(), other.getB(), other.getCtr());
+    }
+
+    // Test for Ellipse type.
     public static boolean isEllipse(double a, double b) {
-        return EllipseImpl.Rep.constraint(a, b);
+        return EllipseImpl.Ellipse.constraint(a, b);
     }
 
     public double getA();

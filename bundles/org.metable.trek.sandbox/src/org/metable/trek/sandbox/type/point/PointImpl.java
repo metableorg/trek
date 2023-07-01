@@ -1,33 +1,5 @@
 package org.metable.trek.sandbox.type.point;
 
-/**
- * <code> 
- * 
- * TYPE Point
- *     POSSREP Cartesian (x RATIONAL, y RATIONAL)    
- *     POSSREP Polar (rho RATIONAL, theta RATIONAL CONSTRAINT theta >= 0.0 AND theta <= 360.0) 
- * INIT
- *     Polar (rho := SQRT((x * x) + (y * y)), theta := ARCTAN(y/x)) 
- *     Cartesian (x := rho * COS(theta), y := rho *SIN(theta);
- *    
- *     
- *  type Point {
- *      rep Cartesian(double x, double y);
- *      rep Polar(double rho, double theta) {constraint (theta >= 0.0 && theta <= 360.0)};
- *      
- *      rep Cartesian {double x; double y;}
- *      rep Polar {double rho; double theta; constraint {theta >= 0.0 && theta <= 360.0;}}
- *      
- *      Cartesian from Polar {x = rho * cos(theta); y = rho * sin(theta);}
- *      Polar from Cartesian {rho = sqrt((x * x) + (y * y)); theta = arctan(y/x);}
- *      
- *      init {Cartesian(0, 0);}
- *  }
- *  
- *  var Point point = Point.Cartesian(0, 0);
- *     
- *	</code>
- */
 class PointImpl implements Point {
     static class Cartesian {
         final double x;
@@ -92,11 +64,15 @@ class PointImpl implements Point {
     }
 
     @Override
-    public void setRho(double value) {
+    public void setRho(double rho) {
+        this.polar = new Polar(rho, polar.theta);
+        this.cartesian = new Cartesian(polar);
     }
 
     @Override
-    public void setTheta(double value) {
+    public void setTheta(double theta) {
+        this.polar = new Polar(polar.rho, theta);
+        this.cartesian = new Cartesian(polar);
     }
 
     @Override

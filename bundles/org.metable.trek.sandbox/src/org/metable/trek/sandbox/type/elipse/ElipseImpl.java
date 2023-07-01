@@ -1,10 +1,11 @@
 package org.metable.trek.sandbox.type.elipse;
 
 import org.metable.trek.sandbox.type.circle.Circle;
+import org.metable.trek.sandbox.type.noncircle.NonCircle;
 import org.metable.trek.sandbox.type.point.Point;
 
 class EllipseImpl implements Ellipse {
-    static class Rep {
+    static class Ellipse {
         double a;
         double b;
         Point ctr;
@@ -13,7 +14,7 @@ class EllipseImpl implements Ellipse {
             return (a >= b);
         }
 
-        Rep(double a, double b, Point ctr) {
+        Ellipse(double a, double b, Point ctr) {
             this.a = a;
             this.b = b;
             this.ctr = Point.point(ctr);
@@ -23,7 +24,7 @@ class EllipseImpl implements Ellipse {
     EllipseImpl() {
     }
 
-    Rep rep;
+    Ellipse rep;
 
     @Override
     public Point getCtr() {
@@ -61,6 +62,10 @@ class EllipseImpl implements Ellipse {
             return Circle.class;
         }
 
-        return Ellipse.class;
+        if (NonCircle.isNonCircle(this)) {
+            return NonCircle.class;
+        }
+
+        return org.metable.trek.sandbox.type.elipse.Ellipse.class;
     }
 }

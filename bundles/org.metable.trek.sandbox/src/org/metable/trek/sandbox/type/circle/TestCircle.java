@@ -9,12 +9,12 @@ public class TestCircle {
 
         System.out.println("MST: " + circle.getMostSpecificType());
 
-        circle.setA(3);
-        circle.setB(4);
+        circle.setA(11);
+        circle.setB(3);
 
         System.out.println("MST: " + circle.getMostSpecificType());
 
-        circle.setB(3);
+        circle.setB(11);
 
         System.out.println("MST: " + circle.getMostSpecificType());
 

@@ -1,23 +1,23 @@
-package org.metable.trek.sandbox.type.circle;
+package org.metable.trek.sandbox.type.noncircle;
 
 import org.metable.trek.sandbox.type.elipse.Ellipse;
 import org.metable.trek.sandbox.type.point.Point;
 
-public class CircleImpl implements Circle {
+public class NonCircleImpl implements NonCircle {
 
-    static class Rep {
+    static class NonCircle {
         Ellipse ellipse;
 
         static boolean constraint(Ellipse ellipse) {
-            return (ellipse.getA() == ellipse.getB());
+            return (ellipse.getA() > ellipse.getB());
         }
 
-        Rep(double r, Point ctr) {
-            ellipse = Ellipse.ellipse(r, r, ctr);
+        NonCircle(double a, double b, Point ctr) {
+            ellipse = Ellipse.ellipse(a, b, ctr);
         }
     }
 
-    Rep rep;
+    NonCircle rep;
 
     @Override
     public double getA() {
@@ -35,11 +35,6 @@ public class CircleImpl implements Circle {
     }
 
     @Override
-    public double getR() {
-        return rep.ellipse.getA();
-    }
-
-    @Override
     public void setA(double a) {
         rep.ellipse = Ellipse.ellipse(a, getB(), getCtr());
     }
@@ -47,6 +42,11 @@ public class CircleImpl implements Circle {
     @Override
     public void setB(double b) {
         rep.ellipse = Ellipse.ellipse(getA(), b, getCtr());
+    }
+
+    static {
+        Ellipse ellipse = Ellipse.ellipse(1, 1, Point.cartesian(0, 0));
+        assert (!NonCircle.constraint(ellipse));
     }
 
     @Override
@@ -58,9 +58,9 @@ public class CircleImpl implements Circle {
     public Class<?> getMostSpecificType() {
         return rep.ellipse.getMostSpecificType();
     }
-
+    
     static {
-        Ellipse ellipse = Ellipse.ellipse(15, 11, Point.cartesian(0, 0));
-        assert (!Rep.constraint(ellipse));
+        Ellipse ellipse = Ellipse.ellipse(1, 1, Point.cartesian(0, 0));
+        assert (!NonCircle.constraint(ellipse));
     }
 }
