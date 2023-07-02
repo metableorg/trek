@@ -5,19 +5,19 @@ import org.metable.trek.sandbox.type.point.Point;
 
 public class CircleImpl implements Circle {
 
-    static class Rep {
+    static class Circle {
         Ellipse ellipse;
 
         static boolean constraint(Ellipse ellipse) {
             return (ellipse.getA() == ellipse.getB());
         }
 
-        Rep(double r, Point ctr) {
+        Circle(double r, Point ctr) {
             ellipse = Ellipse.ellipse(r, r, ctr);
         }
     }
 
-    Rep rep;
+    Circle rep;
 
     @Override
     public double getA() {
@@ -54,13 +54,8 @@ public class CircleImpl implements Circle {
         rep.ellipse.setCtr(point);
     }
 
-    @Override
-    public Class<?> getMostSpecificType() {
-        return rep.ellipse.getMostSpecificType();
-    }
-
     static {
         Ellipse ellipse = Ellipse.ellipse(15, 11, Point.cartesian(0, 0));
-        assert (!Rep.constraint(ellipse));
+        assert (!Circle.constraint(ellipse));
     }
 }

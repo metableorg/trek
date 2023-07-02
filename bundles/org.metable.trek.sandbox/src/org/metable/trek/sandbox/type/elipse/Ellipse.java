@@ -1,6 +1,11 @@
 package org.metable.trek.sandbox.type.elipse;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.metable.trek.sandbox.type.Alpha;
+import org.metable.trek.sandbox.type.circle.Circle;
+import org.metable.trek.sandbox.type.noncircle.NonCircle;
 import org.metable.trek.sandbox.type.point.Point;
 
 /**
@@ -35,7 +40,7 @@ import org.metable.trek.sandbox.type.point.Point;
  */
 
 /**
- * Interface Ellipse  
+ * Interface Ellipse
  */
 public interface Ellipse extends Alpha {
 
@@ -46,7 +51,7 @@ public interface Ellipse extends Alpha {
 
         ellipse.rep = new EllipseImpl.Ellipse(a, b, ctr);
 
-        assert (isEllipse(ellipse.rep.a, ellipse.rep.b));
+        assert (isType(ellipse));
 
         return ellipse;
     }
@@ -56,16 +61,25 @@ public interface Ellipse extends Alpha {
         return ellipse(10, 5, Point.cartesian(0, 0));
     }
 
-
     // Copy Ellipse selector.
     public static Ellipse ellipse(Ellipse other) {
         return ellipse(other.getA(), other.getB(), other.getCtr());
     }
 
     // Test for Ellipse type.
-    public static boolean isEllipse(double a, double b) {
-        return EllipseImpl.Ellipse.constraint(a, b);
+    public static boolean isType(Alpha alpha) {
+
+        if (alpha instanceof Ellipse) {
+            Ellipse value = (Ellipse) alpha;
+            return EllipseImpl.Ellipse.constraint(value.getA(), value.getB());
+        }
+
+        return false;
     }
+
+    public static List<Class<?>> getSubtypes() {
+        return Arrays.asList(Circle.class, NonCircle.class);
+    };
 
     public double getA();
 

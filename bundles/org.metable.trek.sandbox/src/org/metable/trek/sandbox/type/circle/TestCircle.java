@@ -6,6 +6,8 @@ public class TestCircle {
 
     public static void main(String[] args) {
         Circle circle = Circle.circle();
+        
+        System.out.println(circle.getMostSpecificType());
 
         System.out.println("MST: " + circle.getMostSpecificType());
 

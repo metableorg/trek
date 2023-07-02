@@ -1,7 +1,5 @@
 package org.metable.trek.sandbox.type.elipse;
 
-import org.metable.trek.sandbox.type.circle.Circle;
-import org.metable.trek.sandbox.type.noncircle.NonCircle;
 import org.metable.trek.sandbox.type.point.Point;
 
 class EllipseImpl implements Ellipse {
@@ -54,18 +52,5 @@ class EllipseImpl implements Ellipse {
     @Override
     public void setCtr(Point point) {
         rep.ctr = Point.point(point);
-    }
-
-    @Override
-    public Class<?> getMostSpecificType() {
-        if (Circle.isCircle(this)) {
-            return Circle.class;
-        }
-
-        if (NonCircle.isNonCircle(this)) {
-            return NonCircle.class;
-        }
-
-        return org.metable.trek.sandbox.type.elipse.Ellipse.class;
     }
 }

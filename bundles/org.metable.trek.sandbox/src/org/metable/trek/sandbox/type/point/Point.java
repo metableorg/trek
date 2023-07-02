@@ -36,6 +36,9 @@
  */
 package org.metable.trek.sandbox.type.point;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.metable.trek.sandbox.type.Alpha;
 
 public interface Point extends Alpha {
@@ -64,8 +67,16 @@ public interface Point extends Alpha {
         return cartesian(point.getX(), point.getY());
     }
 
+    public static boolean isType(Alpha alpha) {
+        return (alpha instanceof Point);
+    }
+
     public static Point point() {
         return cartesian(0, 0);
+    }
+
+    public static List<Class<?>> getSubtypes() {
+        return Collections.emptyList();
     }
 
     double getX();

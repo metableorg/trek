@@ -1,5 +1,8 @@
 package org.metable.trek.sandbox.type.circle;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.metable.trek.sandbox.type.Alpha;
 import org.metable.trek.sandbox.type.elipse.Ellipse;
 import org.metable.trek.sandbox.type.point.Point;
@@ -33,14 +36,14 @@ import org.metable.trek.sandbox.type.point.Point;
  * 
  * </code>
  */
-public interface Circle extends Alpha, Ellipse {
+public interface Circle extends Ellipse {
 
     public static Circle circle(double r, Point ctr) {
         CircleImpl circle = new CircleImpl();
 
-        circle.rep = new CircleImpl.Rep(r, ctr);
+        circle.rep = new CircleImpl.Circle(r, ctr);
 
-        assert (isCircle(circle.rep.ellipse));
+        assert (isType(circle));
 
         return circle;
     }
@@ -53,8 +56,16 @@ public interface Circle extends Alpha, Ellipse {
         return circle(other.getR(), other.getCtr());
     }
 
-    public static boolean isCircle(Ellipse ellipse) {
-        return CircleImpl.Rep.constraint(ellipse);
+    public static boolean isType(Alpha alpha) {
+        if (alpha instanceof Ellipse) {
+            return CircleImpl.Circle.constraint((Ellipse) alpha);
+        }
+
+        return false;
+    }
+
+    public static List<Class<?>> getSubtypes() {
+        return Collections.emptyList();
     }
 
     public double getR();

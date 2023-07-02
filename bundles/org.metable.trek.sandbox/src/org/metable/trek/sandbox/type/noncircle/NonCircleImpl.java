@@ -54,11 +54,6 @@ public class NonCircleImpl implements NonCircle {
         rep.ellipse.setCtr(point);
     }
 
-    @Override
-    public Class<?> getMostSpecificType() {
-        return rep.ellipse.getMostSpecificType();
-    }
-    
     static {
         Ellipse ellipse = Ellipse.ellipse(1, 1, Point.cartesian(0, 0));
         assert (!NonCircle.constraint(ellipse));

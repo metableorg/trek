@@ -1,5 +1,8 @@
 package org.metable.trek.sandbox.type.noncircle;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.metable.trek.sandbox.type.Alpha;
 import org.metable.trek.sandbox.type.elipse.Ellipse;
 import org.metable.trek.sandbox.type.point.Point;
@@ -14,7 +17,7 @@ import org.metable.trek.sandbox.type.point.Point;
  *         Ellipse.ctr ctr;
  *         
  *         constraint {
- *             a > b;
+ *             Ellipse.a > Ellipse.b;
  *         }
  *     
  *     not {Ellipse(1, 1, Cartesian(0, 0));}
@@ -27,7 +30,7 @@ import org.metable.trek.sandbox.type.point.Point;
  * 
  * </code>
  */
-public interface NonCircle extends Alpha, Ellipse {
+public interface NonCircle extends Ellipse {
 
     // The Ellipse possible representation selector.
     public static NonCircle nonCircle(double a, double b, Point ctr) {
@@ -36,7 +39,7 @@ public interface NonCircle extends Alpha, Ellipse {
 
         nonCircle.rep = new NonCircleImpl.NonCircle(a, b, ctr);
 
-        assert (isNonCircle(nonCircle.rep.ellipse));
+        assert (isType(nonCircle));
 
         return nonCircle;
     }
@@ -49,8 +52,15 @@ public interface NonCircle extends Alpha, Ellipse {
         return nonCircle(other.getA(), other.getB(), other.getCtr());
     }
 
-    public static boolean isNonCircle(Ellipse ellipse) {
-        return NonCircleImpl.NonCircle.constraint(ellipse);
-    }
+    public static boolean isType(Alpha alpha) {
+        if (alpha instanceof Ellipse) {
+            return NonCircleImpl.NonCircle.constraint((Ellipse) alpha);
+        }
 
+        return false;
+    }
+    
+    public static List<Class<?>> getSubtypes() {
+        return Collections.emptyList();
+    }
 }
