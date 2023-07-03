@@ -20,7 +20,9 @@ import org.metable.trek.sandbox.type.point.Point;
  *             Ellipse.a > Ellipse.b;
  *         }
  *     
- *     not {Ellipse(1, 1, Cartesian(0, 0));}
+ *     not {
+ *         Ellipse(1, 1, Cartesian(0, 0));
+ *     }
  *     
  *     init {
  *         NonCircle(10, 7, Cartesian(0, 0);

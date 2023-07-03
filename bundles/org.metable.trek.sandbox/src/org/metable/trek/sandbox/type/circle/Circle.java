@@ -9,10 +9,12 @@ import org.metable.trek.sandbox.type.point.Point;
 
 /**
  * <code> 
+ *
+ * // Single inheritance example.
  * 
  * type Circle extends Ellipse {
  *     rep {
- *         Ellipse.a r; // r is an alias for Ellipse.a
+ *         Ellipse.a r;     // r is an alias for Ellipse.a
  *         Ellipse.ctr ctr; // ctr is an alias for Ellipe.ctr
  *         
  *         constraint {
@@ -21,6 +23,9 @@ import org.metable.trek.sandbox.type.point.Point;
  *     }
  *     
  *     not {
+ *         // Proof that Circle defines a proper subset of Ellipse.
+ *         // The 'not' clause demonstrates that there exists at least one
+ *         // valid Ellipse that is not a Circle.
  *         Ellipse(10, 5, Cartesian(0, 0));
  *     }
  *     

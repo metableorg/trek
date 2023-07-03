@@ -1,10 +1,15 @@
 package org.metable.trek.sandbox.type.circle;
 
 import org.metable.trek.sandbox.type.elipse.Ellipse;
+import org.metable.trek.sandbox.type.weight.Weight;
 
 public class TestCircle {
 
     public static void main(String[] args) {
+        Weight weight = Weight.pound();
+
+        System.out.println(weight.getMostSpecificType());
+
         Circle circle = Circle.circle();
         
         System.out.println(circle.getMostSpecificType());

@@ -16,6 +16,8 @@
  *              theta >= 0.0 && theta <= 360.0;
  *          }
  *      }
+ *     
+ *      // Show how to translate between possible representations.
  *      
  *      Cartesian from Polar {
  *          x = rho * cos(theta);
@@ -71,7 +73,7 @@ public interface Point extends Alpha {
         return (alpha instanceof Point);
     }
 
-    public static Point point() {
+    public static Point cartesian() {
         return cartesian(0, 0);
     }
 

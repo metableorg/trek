@@ -55,7 +55,10 @@ public class CircleImpl implements Circle {
     }
 
     static {
+        // Construct a valid Ellipse.
         Ellipse ellipse = Ellipse.ellipse(15, 11, Point.cartesian(0, 0));
+
+        // Assert that the Ellipse is not a Circle. Therefore, Circle is a proper subset of Ellipse.
         assert (!Circle.constraint(ellipse));
     }
 }

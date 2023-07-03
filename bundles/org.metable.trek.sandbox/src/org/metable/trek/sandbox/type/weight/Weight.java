@@ -1,118 +1,101 @@
-package org.metable.trek.sandbox.type.weight;
-
 /**
  * <code> 
- * 
+ *  // Example using possible representations (rep) to perform unit conversion. 
+ *  
  *  type Weight {
- *      rep Pound {double lb; constraint {lb >= 0;}}
- *      rep Kilogram {double kg; constraint {kg >= 0;}}
- *      rep Gram {double value; constraint {g >= 0;}}
  *      
- *      Pound {Kilogram {lb = 2.20462 * kg;}} 
- *      Pound {Gram {lb = 0.00220462 * g;}} 
+ *      rep Pound {
+ *          double lb;
+ *          
+ *          constraint {
+ *              lb >= 0.0;
+ *          }
+ *      }
  *      
- *      Kilogram {Pound {kg = 0.453592 * lb;}}
- *      Kilogram {Gram {kg = 0.001 * g;}}
+ *      rep Kilogram {
+ *          double kg;
+ *          
+ *          constraint {
+ *              kg >= 0.0;
+ *          }
+ *      }
  *      
- *      Gram {Pound {g = 453.592 * lb;}}
- *      Gram {Kilogram {g = 1000 * kg;}}
+ *      rep Gram {
+ *          double g;
+ *          
+ *          constraint {
+ *              g >= 0.0;
+ *          }
+ *      }
+ *      
+ *      // Show how to translate between possible representations.
+ *      
+ *      Pound from Kilogram {
+ *          lb = 2.20462 * kg;
+ *      } 
+ *      
+ *      Pound from Gram {
+ *          lb = 0.00220462 * g;
+ *      } 
+ *      
+ *      Kilogram from Pound {
+ *          kg = 0.453592 * lb;
+ *      }
+ *      
+ *      Kilogram from Gram {
+ *          kg = 0.001 * g;
+ *      }
+ *      
+ *      Gram from Pound {
+ *          g = 453.592 * lb;
+ *      }
+ *      
+ *      Gram from Kilogram {
+ *          g = 1000 * kg;
+ *      }
  *     
- *      init {Pound(0);}
+ *      init {
+ *          Pound(0);
+ *      }
  *  }
  *     
- *	</code>
+ *  </code>
  */
-public class Weight {
 
-    private static class Pound {
+package org.metable.trek.sandbox.type.weight;
 
-        private double value;
+import java.util.Collections;
+import java.util.List;
 
-        private static boolean constraint(double value) {
-            return value >= 0;
-        }
+import org.metable.trek.sandbox.type.Alpha;
 
-        private Pound(double value) {
-            assert (constraint(value));
+public interface Weight extends Alpha {
 
-            this.value = value;
-        }
+    public static Weight pound(double lb) {
+        WeightImpl weight = new WeightImpl();
 
-        private Pound(Kilogram kilogram) {
-            value = 2.20462 * kilogram.value;
-        }
-
-        private Pound(Gram gram) {
-            value = 0.00220462 * gram.value;
-        }
-
-        private void setValue(double value) {
-            this.value = value;
-        }
-    }
-
-    private static class Kilogram {
-        private double value;
-
-        private static boolean constraint(double value) {
-            return value >= 0;
-        }
-
-        private Kilogram(double value) {
-            assert (constraint(value));
-
-            this.value = value;
-        }
-
-        private Kilogram(Pound pound) {
-            value = 2.20462 * pound.value;
-        }
-
-        private Kilogram(Gram gram) {
-            value = 0.00220462 * gram.value;
-        }
-    }
-
-    private static class Gram {
-        private double value;
-
-        private static boolean constraint(double value) {
-            return value >= 0;
-        }
-
-        private Gram(double value) {
-            assert (constraint(value));
-
-            this.value = value;
-        }
-
-        private Gram(Pound pound) {
-            value = 2.20462 * pound.value;
-        }
-
-        private Gram(Kilogram kilogram) {
-            value = 0.00220462 * kilogram.value;
-        }
-    }
-
-    private Pound pound;
-    private Kilogram kilogram;
-    private Gram gram;
-
-    public static Weight pound(double value) {
-        Weight weight = new Weight();
-
-        weight.pound = new Pound(value);
-        weight.kilogram = new Kilogram(weight.pound);
-        weight.gram = new Gram(weight.pound);
+        weight.pound = new WeightImpl.Pound(lb);
+        weight.kilogram = new WeightImpl.Kilogram(weight.pound);
+        weight.gram = new WeightImpl.Gram(weight.pound);
 
         return weight;
     }
 
-    public void setPoundValue(double value) {
-        pound.setValue(value);
-        kilogram = new Kilogram(pound);
-        gram = new Gram(pound);
+    public static Weight pound() {
+        return pound(0.0);
     }
 
+    void setLb(double lb);
+
+    void setKg(double kg);
+
+    void setG(double g);
+
+    public static List<Class<?>> getSubtypes() {
+        return Collections.emptyList();
+    }
+
+    public static boolean isType(Alpha alpha) {
+        return (alpha instanceof Weight);
+    }
 }

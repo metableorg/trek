@@ -7,10 +7,11 @@ import java.util.List;
 
 import org.metable.trek.sandbox.type.elipse.Ellipse;
 import org.metable.trek.sandbox.type.point.Point;
+import org.metable.trek.sandbox.type.weight.Weight;
 
 public interface Alpha {
     public static List<Class<?>> getSubtypes() {
-        return Arrays.asList(Ellipse.class, Point.class);
+        return Arrays.asList(Ellipse.class, Point.class, Weight.class);
     }
 
     public static boolean isType(Alpha alpha) {
