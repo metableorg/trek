@@ -21,12 +21,9 @@ public interface Alpha {
         try {
             Method isType = type.getMethod("isType", Alpha.class);
             return (boolean) isType.invoke(null, value);
-        } catch (RuntimeException | ReflectiveOperationException e) {
-            e.printStackTrace();
-            assert (false);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Failed to invoke isType method", e);
         }
-
-        return false;
     }
 
     default Class<?> getMostSpecificType() {
@@ -42,8 +39,7 @@ public interface Alpha {
             Method getSubTypes = type.getMethod("getSubtypes");
             subtypes = (List<Class<?>>) getSubTypes.invoke(null);
         } catch (RuntimeException | ReflectiveOperationException e) {
-            e.printStackTrace();
-            assert (false);
+            throw new RuntimeException("Failed to invoke getSubtypes method", e);
         }
 
         for (Class<?> subType : subtypes) {
