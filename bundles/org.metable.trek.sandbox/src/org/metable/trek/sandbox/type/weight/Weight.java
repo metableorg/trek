@@ -67,9 +67,7 @@ package org.metable.trek.sandbox.type.weight;
 import java.util.Collections;
 import java.util.List;
 
-import org.metable.trek.sandbox.type.Alpha;
-
-public interface Weight extends Alpha {
+public interface Weight {
 
     public static Weight pound(double lb) {
         WeightImpl weight = new WeightImpl();
@@ -95,7 +93,7 @@ public interface Weight extends Alpha {
         return Collections.emptyList();
     }
 
-    public static boolean isType(Alpha alpha) {
-        return (alpha instanceof Weight);
+    public static boolean isType(Object value) {
+        return (value instanceof Weight);
     }
 }

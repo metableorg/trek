@@ -9,7 +9,7 @@ public class CircleImpl implements Circle {
         Ellipse ellipse;
 
         static boolean constraint(Ellipse ellipse) {
-            return (ellipse.getA() == ellipse.getB());
+            return (Ellipse.getA(ellipse) == Ellipse.getB(ellipse));
         }
 
         Circle(double r, Point ctr) {
@@ -19,46 +19,27 @@ public class CircleImpl implements Circle {
 
     Circle rep;
 
-    @Override
-    public double getA() {
-        return rep.ellipse.getA();
-    }
-
-    @Override
-    public double getB() {
-        return rep.ellipse.getB();
-    }
-
-    @Override
-    public Point getCtr() {
-        return rep.ellipse.getCtr();
-    }
-
-    @Override
-    public double getR() {
-        return rep.ellipse.getA();
-    }
-
-    @Override
-    public void setA(double a) {
-        rep.ellipse = Ellipse.ellipse(a, getB(), getCtr());
-    }
-
-    @Override
-    public void setB(double b) {
-        rep.ellipse = Ellipse.ellipse(getA(), b, getCtr());
-    }
-
-    @Override
-    public void setCtr(Point point) {
-        rep.ellipse.setCtr(point);
-    }
-
     static {
         // Construct a valid Ellipse.
         Ellipse ellipse = Ellipse.ellipse(15, 11, Point.cartesian(0, 0));
 
         // Assert that the Ellipse is not a Circle. Therefore, Circle is a proper subset of Ellipse.
         assert (!Circle.constraint(ellipse));
+    }
+
+    void setR(double r) {
+        rep.ellipse = Ellipse.ellipse(r, r, Ellipse.getCtr(rep.ellipse));
+    }
+
+    double getR() {
+        return Ellipse.getA(rep.ellipse);
+    }
+
+    void setCtr(Point point) {
+        Ellipse.setCtr(rep.ellipse, point);
+    }
+
+    Point getCtr() {
+        return Ellipse.getCtr(rep.ellipse);
     }
 }

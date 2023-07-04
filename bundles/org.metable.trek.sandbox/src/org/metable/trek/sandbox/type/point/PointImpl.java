@@ -74,9 +74,4 @@ class PointImpl implements Point {
         this.polar = new Polar(polar.rho, theta);
         this.cartesian = new Cartesian(polar);
     }
-
-    @Override
-    public Class<?> getMostSpecificType() {
-        return Point.class;
-    }
 }

@@ -1,13 +1,3 @@
-package org.metable.trek.sandbox.type.elipse;
-
-import java.util.Arrays;
-import java.util.List;
-
-import org.metable.trek.sandbox.type.Alpha;
-import org.metable.trek.sandbox.type.circle.Circle;
-import org.metable.trek.sandbox.type.noncircle.NonCircle;
-import org.metable.trek.sandbox.type.point.Point;
-
 /**
  * <code> 
  * 
@@ -39,10 +29,19 @@ import org.metable.trek.sandbox.type.point.Point;
  * </code>
  */
 
+package org.metable.trek.sandbox.type.elipse;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.metable.trek.sandbox.type.circle.Circle;
+import org.metable.trek.sandbox.type.noncircle.NonCircle;
+import org.metable.trek.sandbox.type.point.Point;
+
 /**
  * Interface Ellipse
  */
-public interface Ellipse extends Alpha {
+public interface Ellipse {
 
     // The Ellipse possible representation selector.
     public static Ellipse ellipse(double a, double b, Point ctr) {
@@ -63,15 +62,24 @@ public interface Ellipse extends Alpha {
 
     // Copy Ellipse selector.
     public static Ellipse ellipse(Ellipse other) {
-        return ellipse(other.getA(), other.getB(), other.getCtr());
+        EllipseImpl otherImpl = (EllipseImpl) other;
+        return ellipse(otherImpl.getA(), otherImpl.getB(), otherImpl.getCtr());
+    }
+
+    // Assign Circle to Ellipse.
+    public static Ellipse assign(Circle circle) {
+        return ellipse(Circle.getR(circle), Circle.getR(circle), Circle.getCtr(circle));
+    }
+
+    // Assign NonCircle to Ellipse.
+    public static Ellipse assign(NonCircle nonCircle) {
+        return ellipse(NonCircle.getA(nonCircle), NonCircle.getB(nonCircle), NonCircle.getCtr(nonCircle));
     }
 
     // Test for Ellipse type.
-    public static boolean isType(Alpha alpha) {
-
-        if (alpha instanceof Ellipse) {
-            Ellipse value = (Ellipse) alpha;
-            return EllipseImpl.Ellipse.constraint(value.getA(), value.getB());
+    public static boolean isType(Object value) {
+        if (value instanceof Ellipse) {
+            return EllipseImpl.Ellipse.constraint(getA((Ellipse) value), getB((Ellipse) value));
         }
 
         return false;
@@ -81,15 +89,28 @@ public interface Ellipse extends Alpha {
         return Arrays.asList(Circle.class, NonCircle.class);
     };
 
-    public double getA();
+    public static double getA(Ellipse e) {
+        return ((EllipseImpl) e).getA();
+    }
 
-    public double getB();
+    public static void setA(Ellipse e, double a) {
+        ((EllipseImpl) e).setA(a);
+    }
 
-    public Point getCtr();
+    public static double getB(Ellipse e) {
+        return ((EllipseImpl) e).getB();
+    }
 
-    public void setCtr(Point point);
+    public static void setB(Ellipse e, double b) {
+        ((EllipseImpl) e).setB(b);
+    }
 
-    public void setA(double a);
+    public static Point getCtr(Ellipse e) {
+        return ((EllipseImpl) e).getCtr();
+    }
 
-    public void setB(double b);
+    public static void setCtr(Ellipse e, Point ctr) {
+        ((EllipseImpl) e).setCtr(ctr);
+    }
+
 }

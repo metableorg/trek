@@ -10,29 +10,8 @@ import org.metable.trek.sandbox.type.point.Point;
 import org.metable.trek.sandbox.type.weight.Weight;
 
 public interface Alpha {
-    public static List<Class<?>> getSubtypes() {
-        return Arrays.asList(Ellipse.class, Point.class, Weight.class);
-    }
-
-    public static boolean isType(Alpha alpha) {
-        return true;
-    }
-
-    private static boolean isType(Alpha value, Class<?> type) {
-        try {
-            Method isType = type.getMethod("isType", Alpha.class);
-            return (boolean) isType.invoke(null, value);
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException("Failed to invoke isType method", e);
-        }
-    }
-
-    default Class<?> getMostSpecificType() {
-        return getMostSpecificType(Alpha.class);
-    }
-
     @SuppressWarnings("unchecked")
-    private Class<?> getMostSpecificType(Class<?> type) {
+    private static Class<?> getMostSpecificType(Class<?> type, Object value) {
 
         List<Class<?>> subtypes = Collections.emptyList();
 
@@ -44,17 +23,38 @@ public interface Alpha {
         }
 
         for (Class<?> subType : subtypes) {
-            Class<?> result = getMostSpecificType(subType);
+            Class<?> result = getMostSpecificType(subType, value);
 
             if (result != null) {
                 return result;
             }
         }
 
-        if (isType(this, type)) {
+        if (isType(value, type)) {
             return type;
         }
 
         return null;
+    }
+
+    public static Class<?> getMostSpecificType(Object value) {
+        return getMostSpecificType(Alpha.class, value);
+    }
+
+    public static List<Class<?>> getSubtypes() {
+        return Arrays.asList(Ellipse.class, Point.class, Weight.class);
+    }
+
+    public static boolean isType(Object alpha) {
+        return true;
+    }
+
+    private static boolean isType(Object value, Class<?> type) {
+        try {
+            Method isType = type.getMethod("isType", Object.class);
+            return (boolean) isType.invoke(null, value);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Failed to invoke isType method", e);
+        }
     }
 }

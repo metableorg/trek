@@ -9,7 +9,7 @@ public class NonCircleImpl implements NonCircle {
         Ellipse ellipse;
 
         static boolean constraint(Ellipse ellipse) {
-            return (ellipse.getA() > ellipse.getB());
+            return (Ellipse.getA(ellipse) > Ellipse.getB(ellipse));
         }
 
         NonCircle(double a, double b, Point ctr) {
@@ -19,39 +19,30 @@ public class NonCircleImpl implements NonCircle {
 
     NonCircle rep;
 
-    @Override
-    public double getA() {
-        return rep.ellipse.getA();
+    double getA() {
+        return Ellipse.getA(rep.ellipse);
     }
 
-    @Override
-    public double getB() {
-        return rep.ellipse.getB();
+    double getB() {
+        return Ellipse.getB(rep.ellipse);
     }
 
-    @Override
-    public Point getCtr() {
-        return rep.ellipse.getCtr();
+    Point getCtr() {
+        return Ellipse.getCtr(rep.ellipse);
     }
 
-    @Override
-    public void setA(double a) {
+    void setA(double a) {
         rep.ellipse = Ellipse.ellipse(a, getB(), getCtr());
+        assert (NonCircle.constraint(rep.ellipse));
     }
 
-    @Override
-    public void setB(double b) {
+    void setB(double b) {
         rep.ellipse = Ellipse.ellipse(getA(), b, getCtr());
+        assert (NonCircle.constraint(rep.ellipse));
     }
 
-    static {
-        Ellipse ellipse = Ellipse.ellipse(1, 1, Point.cartesian(0, 0));
-        assert (!NonCircle.constraint(ellipse));
-    }
-
-    @Override
-    public void setCtr(Point point) {
-        rep.ellipse.setCtr(point);
+    void setCtr(Point ctr) {
+        rep.ellipse = Ellipse.ellipse(getA(), getB(), ctr);
     }
 
     static {

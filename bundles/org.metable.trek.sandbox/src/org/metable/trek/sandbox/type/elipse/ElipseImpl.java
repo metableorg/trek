@@ -24,33 +24,29 @@ class EllipseImpl implements Ellipse {
 
     Ellipse rep;
 
-    @Override
-    public Point getCtr() {
+    Point getCtr() {
         return rep.ctr;
     }
 
-    @Override
-    public double getB() {
+    double getB() {
         return rep.b;
     }
 
-    @Override
-    public double getA() {
+    double getA() {
         return rep.a;
     }
 
-    @Override
-    public void setA(double a) {
+    void setA(double a) {
         rep.a = a;
+        assert (Ellipse.constraint(a, getB()));
     }
 
-    @Override
-    public void setB(double b) {
+    void setB(double b) {
         rep.b = b;
+        assert (Ellipse.constraint(getA(), b));
     }
 
-    @Override
-    public void setCtr(Point point) {
+    void setCtr(Point point) {
         rep.ctr = Point.point(point);
     }
 }

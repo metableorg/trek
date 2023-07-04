@@ -1,12 +1,3 @@
-package org.metable.trek.sandbox.type.circle;
-
-import java.util.Collections;
-import java.util.List;
-
-import org.metable.trek.sandbox.type.Alpha;
-import org.metable.trek.sandbox.type.elipse.Ellipse;
-import org.metable.trek.sandbox.type.point.Point;
-
 /**
  * <code> 
  *
@@ -41,14 +32,22 @@ import org.metable.trek.sandbox.type.point.Point;
  * 
  * </code>
  */
-public interface Circle extends Ellipse {
+
+package org.metable.trek.sandbox.type.circle;
+
+import java.util.Collections;
+import java.util.List;
+
+import org.metable.trek.sandbox.type.Alpha;
+import org.metable.trek.sandbox.type.elipse.Ellipse;
+import org.metable.trek.sandbox.type.point.Point;
+
+public interface Circle {
 
     public static Circle circle(double r, Point ctr) {
         CircleImpl circle = new CircleImpl();
 
         circle.rep = new CircleImpl.Circle(r, ctr);
-
-        assert (isType(circle));
 
         return circle;
     }
@@ -57,21 +56,40 @@ public interface Circle extends Ellipse {
         return circle(10, Point.cartesian(0, 0));
     }
 
-    public static Circle circle(Circle other) {
-        return circle(other.getR(), other.getCtr());
+    public static Circle treat_as_circle(Ellipse ellipse) {
+        assert (Circle.class.isAssignableFrom(Alpha.getMostSpecificType(ellipse)));
+        return circle(Ellipse.getA(ellipse), Ellipse.getCtr(ellipse));
     }
 
-    public static boolean isType(Alpha alpha) {
-        if (alpha instanceof Ellipse) {
-            return CircleImpl.Circle.constraint((Ellipse) alpha);
+    public static boolean isType(Object value) {
+        if (value instanceof Circle) {
+            return true;
+        }
+
+        if (value instanceof Ellipse) {
+            return CircleImpl.Circle.constraint((Ellipse) value);
         }
 
         return false;
     }
 
+    public static double getR(Circle c) {
+        return ((CircleImpl) c).getR();
+    }
+
+    public static void setR(Circle c, double r) {
+        ((CircleImpl) c).setR(r);
+    }
+    
+    public static Point getCtr(Circle c) {
+        return ((CircleImpl) c).getCtr();
+    }
+
+    public static void setCtr(Circle c, Point ctr) {
+        ((CircleImpl) c).setCtr(ctr);
+    }
+
     public static List<Class<?>> getSubtypes() {
         return Collections.emptyList();
     }
-
-    public double getR();
 }
