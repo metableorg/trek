@@ -69,26 +69,6 @@ import java.util.List;
 
 public interface Weight {
 
-    public static Weight pound(double lb) {
-        WeightImpl weight = new WeightImpl();
-
-        weight.pound = new WeightImpl.Pound(lb);
-        weight.kilogram = new WeightImpl.Kilogram(weight.pound);
-        weight.gram = new WeightImpl.Gram(weight.pound);
-
-        return weight;
-    }
-
-    public static Weight pound() {
-        return pound(0.0);
-    }
-
-    void setLb(double lb);
-
-    void setKg(double kg);
-
-    void setG(double g);
-
     public static List<Class<?>> getSubtypes() {
         return Collections.emptyList();
     }
@@ -96,4 +76,61 @@ public interface Weight {
     public static boolean isType(Object value) {
         return (value instanceof Weight);
     }
+
+    public static Weight pound() {
+        return pound(0.0);
+    }
+
+    public static Weight pound(double lb) {
+        WeightImpl weight = new WeightImpl();
+
+        weight.pound = new WeightImpl.Pound(lb);
+
+        assert (WeightImpl.Pound.constraint(weight.pound));
+
+        weight.kilogram = new WeightImpl.Kilogram(weight.pound);
+        weight.gram = new WeightImpl.Gram(weight.pound);
+
+        return weight;
+    }
+
+    public static Weight kilogram(double kg) {
+        WeightImpl weight = new WeightImpl();
+
+        weight.kilogram = new WeightImpl.Kilogram(kg);
+
+        assert (WeightImpl.Kilogram.constraint(weight.kilogram));
+
+        weight.pound = new WeightImpl.Pound(weight.kilogram);
+        weight.gram = new WeightImpl.Gram(weight.kilogram);
+
+        return weight;
+    }
+
+    public static Weight gram(double g) {
+        WeightImpl weight = new WeightImpl();
+
+        weight.gram = new WeightImpl.Gram(g);
+
+        assert (WeightImpl.Gram.constraint(weight.gram));
+
+        weight.pound = new WeightImpl.Pound(weight.gram);
+        weight.kilogram = new WeightImpl.Kilogram(weight.gram);
+
+        return weight;
+    }
+    
+    public static void setG(Weight weight, double g) {
+        ((WeightImpl) weight).setG(g);
+    }
+    
+    public static double getG(Weight weight) {
+        return ((WeightImpl) weight).getG();
+    }
+
+    // void setG(double g);
+
+    // void setKg(double kg);
+
+    // void setLb(double lb);
 }

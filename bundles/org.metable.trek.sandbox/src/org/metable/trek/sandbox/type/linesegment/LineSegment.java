@@ -1,39 +1,75 @@
+/**
+ * <code> 
+ * 
+ *  import org.metable.trek.sandbox.type.point.Point;
+ *  
+ *  type LineSegment {
+ *  
+ *      rep LineSegment {
+ *          Point begin;
+ *          Point end;
+ *          
+ *          constraint {
+ *              !begin.equals(end);
+ *          }
+ *      }
+ *      
+ *      init {
+ *          LineSegment(Point.cartesian(0, 0), Point.cartesian(10, 10);
+ *      }
+ *  }
+ *  
+ *  </code>
+ */
+
 package org.metable.trek.sandbox.type.linesegment;
+
+import java.util.Collections;
+import java.util.List;
 
 import org.metable.trek.sandbox.type.point.Point;
 
-/**
- * <code>
- *  
- * TYPE LineSegment
- *     POSSREP (begin Point, end Point);  
- * </code>
- */
-public class LineSegment {
+public interface LineSegment {
 
-    private static class LineSegmentPossRep {
-        Point begin;
-        Point end;
-
-        LineSegmentPossRep(Point begin, Point end) {
-            this.begin = begin;
-            this.end = end;
-        }
+    public static Point getBegin(LineSegment lineSegment) {
+        return ((LineSegmentImpl) lineSegment).getBegin();
     }
 
-    private LineSegmentPossRep lineSegmentPossRep;
-
-    private LineSegment() {
+    public static Point getEnd(LineSegment lineSegment) {
+        return ((LineSegmentImpl) lineSegment).getEnd();
     }
 
-    public static LineSegment lineSegmentPossRep(Point begin, Point end) {
-        LineSegment lineSegment = new LineSegment();
-        lineSegment.lineSegmentPossRep = new LineSegmentPossRep(Point.point(begin), Point.point(end));
+    public static List<Class<?>> getSubtypes() {
+        return Collections.emptyList();
+    }
+
+    public static boolean isType(Object value) {
+        return (value instanceof LineSegment);
+    }
+
+    public static LineSegment lineSegment() {
+        return lineSegment(Point.cartesian(0, 0), Point.cartesian(10, 10));
+    }
+
+    public static LineSegment lineSegment(LineSegment lineSegment) {
+        return lineSegment(LineSegment.getBegin(lineSegment), LineSegment.getEnd(lineSegment));
+    }
+
+    public static LineSegment lineSegment(Point begin, Point end) {
+        LineSegmentImpl lineSegment = new LineSegmentImpl();
+
+        lineSegment.rep = new LineSegmentImpl.LineSegment(begin, end);
+
+        assert (LineSegmentImpl.LineSegment.constraint(lineSegment.rep));
 
         return lineSegment;
     }
 
-    public static LineSegment lineSegment(LineSegment lineSegment) {
-        return lineSegmentPossRep(lineSegment.lineSegmentPossRep.begin, lineSegment.lineSegmentPossRep.end);
+    public static void setBegin(LineSegment lineSegment, Point begin) {
+        ((LineSegmentImpl) lineSegment).setBegin(begin);
+    }
+    
+    public static void setEnd(LineSegment lineSegment, Point end) {
+        ((LineSegmentImpl) lineSegment).setEnd(end);
     }
 }

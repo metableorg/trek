@@ -44,6 +44,10 @@ import org.metable.trek.sandbox.type.point.Point;
 
 public interface Circle {
 
+    public static Circle circle() {
+        return circle(10, Point.cartesian(0, 0));
+    }
+
     public static Circle circle(double r, Point ctr) {
         CircleImpl circle = new CircleImpl();
 
@@ -52,13 +56,16 @@ public interface Circle {
         return circle;
     }
 
-    public static Circle circle() {
-        return circle(10, Point.cartesian(0, 0));
+    public static Point getCtr(Circle c) {
+        return ((CircleImpl) c).getCtr();
     }
 
-    public static Circle treat_as_circle(Ellipse ellipse) {
-        assert (Circle.class.isAssignableFrom(Alpha.getMostSpecificType(ellipse)));
-        return circle(Ellipse.getA(ellipse), Ellipse.getCtr(ellipse));
+    public static double getR(Circle c) {
+        return ((CircleImpl) c).getR();
+    }
+
+    public static List<Class<?>> getSubtypes() {
+        return Collections.emptyList();
     }
 
     public static boolean isType(Object value) {
@@ -73,23 +80,29 @@ public interface Circle {
         return false;
     }
 
-    public static double getR(Circle c) {
-        return ((CircleImpl) c).getR();
+    public static void setA(Circle c, double a) {
+        setR(c, a);
     }
 
-    public static void setR(Circle c, double r) {
-        ((CircleImpl) c).setR(r);
-    }
-    
-    public static Point getCtr(Circle c) {
-        return ((CircleImpl) c).getCtr();
+    public static void setB(Circle c, double b) {
+        setR(c, b);
     }
 
     public static void setCtr(Circle c, Point ctr) {
         ((CircleImpl) c).setCtr(ctr);
     }
 
-    public static List<Class<?>> getSubtypes() {
-        return Collections.emptyList();
+    public static void setR(Circle c, double r) {
+        ((CircleImpl) c).setR(r);
+    }
+
+    // Assign Circle to Ellipse.
+    public static Ellipse assign(Circle circle) {
+        return Ellipse.ellipse(Circle.getR(circle), Circle.getR(circle), Circle.getCtr(circle));
+    }
+
+    public static Circle treat_as_circle(Ellipse ellipse) {
+        assert (Circle.class.isAssignableFrom(Alpha.getMostSpecificType(ellipse)));
+        return circle(Ellipse.getA(ellipse), Ellipse.getCtr(ellipse));
     }
 }

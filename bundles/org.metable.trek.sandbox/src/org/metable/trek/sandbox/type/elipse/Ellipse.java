@@ -43,6 +43,11 @@ import org.metable.trek.sandbox.type.point.Point;
  */
 public interface Ellipse {
 
+    // Default Ellipse possible representation selector.
+    public static Ellipse ellipse() {
+        return ellipse(10, 5, Point.cartesian(0, 0));
+    }
+
     // The Ellipse possible representation selector.
     public static Ellipse ellipse(double a, double b, Point ctr) {
 
@@ -55,25 +60,26 @@ public interface Ellipse {
         return ellipse;
     }
 
-    // Default Ellipse possible representation selector.
-    public static Ellipse ellipse() {
-        return ellipse(10, 5, Point.cartesian(0, 0));
-    }
-
     // Copy Ellipse selector.
     public static Ellipse ellipse(Ellipse other) {
         EllipseImpl otherImpl = (EllipseImpl) other;
         return ellipse(otherImpl.getA(), otherImpl.getB(), otherImpl.getCtr());
     }
 
-    // Assign Circle to Ellipse.
-    public static Ellipse assign(Circle circle) {
-        return ellipse(Circle.getR(circle), Circle.getR(circle), Circle.getCtr(circle));
+    public static double getA(Ellipse e) {
+        return ((EllipseImpl) e).getA();
     }
 
-    // Assign NonCircle to Ellipse.
-    public static Ellipse assign(NonCircle nonCircle) {
-        return ellipse(NonCircle.getA(nonCircle), NonCircle.getB(nonCircle), NonCircle.getCtr(nonCircle));
+    public static double getB(Ellipse e) {
+        return ((EllipseImpl) e).getB();
+    };
+
+    public static Point getCtr(Ellipse e) {
+        return ((EllipseImpl) e).getCtr();
+    }
+
+    public static List<Class<?>> getSubtypes() {
+        return Arrays.asList(Circle.class, NonCircle.class);
     }
 
     // Test for Ellipse type.
@@ -85,32 +91,15 @@ public interface Ellipse {
         return false;
     }
 
-    public static List<Class<?>> getSubtypes() {
-        return Arrays.asList(Circle.class, NonCircle.class);
-    };
-
-    public static double getA(Ellipse e) {
-        return ((EllipseImpl) e).getA();
-    }
-
     public static void setA(Ellipse e, double a) {
         ((EllipseImpl) e).setA(a);
-    }
-
-    public static double getB(Ellipse e) {
-        return ((EllipseImpl) e).getB();
     }
 
     public static void setB(Ellipse e, double b) {
         ((EllipseImpl) e).setB(b);
     }
 
-    public static Point getCtr(Ellipse e) {
-        return ((EllipseImpl) e).getCtr();
-    }
-
     public static void setCtr(Ellipse e, Point ctr) {
         ((EllipseImpl) e).setCtr(ctr);
     }
-
 }

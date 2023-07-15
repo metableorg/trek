@@ -17,29 +17,29 @@ class PointImpl implements Point {
     }
 
     static class Polar {
-        double rho;
-        double theta;
-
         static boolean constraint(Polar polar) {
             return (polar.theta >= 0.0 && polar.theta <= 360.0);
+        }
+        double rho;
+
+        double theta;
+
+        Polar(Cartesian cartesian) {
+            rho = Math.sqrt((cartesian.x * cartesian.x) + (cartesian.y * cartesian.y));
+            theta = Math.asin(cartesian.y / cartesian.x);
         }
 
         Polar(double rho, double theta) {
             this.rho = rho;
             this.theta = theta;
         }
-
-        Polar(Cartesian cartesian) {
-            rho = Math.sqrt((cartesian.x * cartesian.x) + (cartesian.y * cartesian.y));
-            theta = Math.asin(cartesian.y / cartesian.x);
-        }
-    }
-
-    PointImpl() {
     }
 
     Cartesian cartesian;
+
     Polar polar;
+    PointImpl() {
+    }
 
     @Override
     public double getX() {
@@ -52,15 +52,16 @@ class PointImpl implements Point {
     }
 
     @Override
-    public void setX(double x) {
-        this.cartesian = new Cartesian(x, cartesian.y);
-        this.polar = new Polar(cartesian);
-    }
+    public boolean is_equal(Point other) {
+        if (getX() != other.getX()) {
+            return false;
+        }
 
-    @Override
-    public void setY(double y) {
-        this.cartesian = new Cartesian(cartesian.x, y);
-        this.polar = new Polar(cartesian);
+        if (getY() != other.getY()) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -73,5 +74,17 @@ class PointImpl implements Point {
     public void setTheta(double theta) {
         this.polar = new Polar(polar.rho, theta);
         this.cartesian = new Cartesian(polar);
+    }
+
+    @Override
+    public void setX(double x) {
+        this.cartesian = new Cartesian(x, cartesian.y);
+        this.polar = new Polar(cartesian);
+    }
+
+    @Override
+    public void setY(double y) {
+        this.cartesian = new Cartesian(cartesian.x, y);
+        this.polar = new Polar(cartesian);
     }
 }

@@ -4,13 +4,13 @@ import org.metable.trek.sandbox.type.point.Point;
 
 class EllipseImpl implements Ellipse {
     static class Ellipse {
-        double a;
-        double b;
-        Point ctr;
-
         static boolean constraint(double a, double b) {
             return (a >= b);
         }
+        double a;
+        double b;
+
+        Point ctr;
 
         Ellipse(double a, double b, Point ctr) {
             this.a = a;
@@ -19,21 +19,21 @@ class EllipseImpl implements Ellipse {
         }
     }
 
+    Ellipse rep;
+
     EllipseImpl() {
     }
 
-    Ellipse rep;
-
-    Point getCtr() {
-        return rep.ctr;
+    double getA() {
+        return rep.a;
     }
 
     double getB() {
         return rep.b;
     }
 
-    double getA() {
-        return rep.a;
+    Point getCtr() {
+        return Point.point(rep.ctr);
     }
 
     void setA(double a) {

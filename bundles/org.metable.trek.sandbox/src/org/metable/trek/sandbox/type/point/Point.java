@@ -43,6 +43,10 @@ import java.util.List;
 
 public interface Point {
 
+    public static Point cartesian() {
+        return cartesian(0, 0);
+    }
+
     public static Point cartesian(double x, double y) {
         PointImpl point = new PointImpl();
 
@@ -50,6 +54,18 @@ public interface Point {
         point.polar = new PointImpl.Polar(point.cartesian);
 
         return point;
+    }
+
+    public static List<Class<?>> getSubtypes() {
+        return Collections.emptyList();
+    }
+
+    public static boolean isType(Object value) {
+        return (value instanceof Point);
+    }
+
+    public static Point point(Point point) {
+        return cartesian(point.getX(), point.getY());
     }
 
     public static Point polar(double rho, double theta) {
@@ -63,31 +79,17 @@ public interface Point {
         return point;
     }
 
-    public static Point point(Point point) {
-        return cartesian(point.getX(), point.getY());
-    }
-
-    public static boolean isType(Object value) {
-        return (value instanceof Point);
-    }
-
-    public static Point cartesian() {
-        return cartesian(0, 0);
-    }
-
-    public static List<Class<?>> getSubtypes() {
-        return Collections.emptyList();
-    }
-
     double getX();
 
     double getY();
 
-    void setX(double value);
-
-    void setY(double value);
+    boolean is_equal(Point end);
 
     void setRho(double value);
 
     void setTheta(double value);
+
+    void setX(double value);
+
+    void setY(double value);
 }

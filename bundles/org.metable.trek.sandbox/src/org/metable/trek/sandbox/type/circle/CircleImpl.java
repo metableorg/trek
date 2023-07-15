@@ -6,18 +6,16 @@ import org.metable.trek.sandbox.type.point.Point;
 public class CircleImpl implements Circle {
 
     static class Circle {
-        Ellipse ellipse;
-
         static boolean constraint(Ellipse ellipse) {
             return (Ellipse.getA(ellipse) == Ellipse.getB(ellipse));
         }
+
+        Ellipse ellipse;
 
         Circle(double r, Point ctr) {
             ellipse = Ellipse.ellipse(r, r, ctr);
         }
     }
-
-    Circle rep;
 
     static {
         // Construct a valid Ellipse.
@@ -27,8 +25,10 @@ public class CircleImpl implements Circle {
         assert (!Circle.constraint(ellipse));
     }
 
-    void setR(double r) {
-        rep.ellipse = Ellipse.ellipse(r, r, Ellipse.getCtr(rep.ellipse));
+    Circle rep;
+
+    Point getCtr() {
+        return Ellipse.getCtr(rep.ellipse);
     }
 
     double getR() {
@@ -39,7 +39,7 @@ public class CircleImpl implements Circle {
         Ellipse.setCtr(rep.ellipse, point);
     }
 
-    Point getCtr() {
-        return Ellipse.getCtr(rep.ellipse);
+    void setR(double r) {
+        rep.ellipse = Ellipse.ellipse(r, r, Ellipse.getCtr(rep.ellipse));
     }
 }

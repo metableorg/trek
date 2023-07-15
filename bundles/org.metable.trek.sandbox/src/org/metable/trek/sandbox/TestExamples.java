@@ -17,7 +17,7 @@ public class TestExamples {
         // Ellipse.setA(c, 0);
 
         // Assignment e := c;
-        Ellipse e = Ellipse.assign(c);
+        Ellipse e = Circle.assign(c);
         Ellipse.setA(e, 21);
         System.out.println("MST: " + Alpha.getMostSpecificType(e));
 
@@ -28,10 +28,10 @@ public class TestExamples {
         
         Circle.setR(c, 5); 
 
-        System.out.println("MST: " + Alpha.getMostSpecificType(Ellipse.assign(c)));
+        System.out.println("MST: " + Alpha.getMostSpecificType(Circle.assign(c)));
         System.out.println("Radius: " + Circle.getR(c));
 
-        e = Ellipse.assign(c);
+        e = Circle.assign(c);
 
         System.out.println("A: " + Ellipse.getA(e));
         System.out.println("B: " + Ellipse.getB(e));
