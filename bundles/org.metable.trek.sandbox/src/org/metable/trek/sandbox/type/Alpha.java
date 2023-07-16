@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.metable.trek.sandbox.type.elipse.Ellipse;
+import org.metable.trek.sandbox.type.ellipse.Ellipse;
 import org.metable.trek.sandbox.type.linesegment.LineSegment;
 import org.metable.trek.sandbox.type.point.Point;
 import org.metable.trek.sandbox.type.weight.Weight;

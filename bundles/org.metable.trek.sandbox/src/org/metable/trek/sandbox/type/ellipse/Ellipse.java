@@ -29,7 +29,7 @@
  * </code>
  */
 
-package org.metable.trek.sandbox.type.elipse;
+package org.metable.trek.sandbox.type.ellipse;
 
 import java.util.Arrays;
 import java.util.List;

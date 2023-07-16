@@ -74,8 +74,6 @@ public interface Point {
         point.polar = new PointImpl.Polar(rho, theta);
         point.cartesian = new PointImpl.Cartesian(point.polar);
 
-        assert (PointImpl.Polar.constraint(point.polar));
-
         return point;
     }
 

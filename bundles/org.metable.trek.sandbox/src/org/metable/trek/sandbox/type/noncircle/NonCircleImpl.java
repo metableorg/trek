@@ -1,6 +1,6 @@
 package org.metable.trek.sandbox.type.noncircle;
 
-import org.metable.trek.sandbox.type.elipse.Ellipse;
+import org.metable.trek.sandbox.type.ellipse.Ellipse;
 import org.metable.trek.sandbox.type.point.Point;
 
 public class NonCircleImpl implements NonCircle {

@@ -2,7 +2,7 @@ package org.metable.trek.sandbox;
 
 import org.metable.trek.sandbox.type.Alpha;
 import org.metable.trek.sandbox.type.circle.Circle;
-import org.metable.trek.sandbox.type.elipse.Ellipse;
+import org.metable.trek.sandbox.type.ellipse.Ellipse;
 import org.metable.trek.sandbox.type.weight.Weight;
 
 public class TestExamples {

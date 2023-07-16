@@ -1,6 +1,6 @@
 package org.metable.trek.sandbox.type.circle;
 
-import org.metable.trek.sandbox.type.elipse.Ellipse;
+import org.metable.trek.sandbox.type.ellipse.Ellipse;
 import org.metable.trek.sandbox.type.point.Point;
 
 public class CircleImpl implements Circle {

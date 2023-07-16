@@ -5,3 +5,4 @@ Bundle-SymbolicName: org.metable.trek.sandbox
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: org.metable.trek.sandbox
 Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: org.junit

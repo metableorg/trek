@@ -1,4 +1,4 @@
-package org.metable.trek.sandbox.type.elipse;
+package org.metable.trek.sandbox.type.ellipse;
 
 import org.metable.trek.sandbox.type.point.Point;
 

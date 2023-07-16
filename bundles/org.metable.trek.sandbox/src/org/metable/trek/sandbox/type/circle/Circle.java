@@ -39,7 +39,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.metable.trek.sandbox.type.Alpha;
-import org.metable.trek.sandbox.type.elipse.Ellipse;
+import org.metable.trek.sandbox.type.ellipse.Ellipse;
 import org.metable.trek.sandbox.type.point.Point;
 
 public interface Circle {
@@ -59,6 +59,10 @@ public interface Circle {
         circle.rep = new CircleImpl.Circle(r, ctr);
 
         return circle;
+    }
+
+    public static Circle circle(Circle circle) {
+        return circle(circle.getR(), circle.getCtr());
     }
 
     public static List<Class<?>> getSubtypes() {
