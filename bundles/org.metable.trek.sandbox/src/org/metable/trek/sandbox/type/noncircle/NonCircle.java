@@ -77,9 +77,14 @@ public interface NonCircle {
         ((NonCircleImpl) nc).setCtr(ctr);
     }
 
-    public static NonCircle treat_as_non_circle(Ellipse ellipse) {
+    public static NonCircle treatAsNonCircle(Ellipse ellipse) {
         assert (NonCircle.class.isAssignableFrom(Alpha.getMostSpecificType(ellipse)));
         return nonCircle(ellipse.getA(), ellipse.getB(), ellipse.getCtr());
+    }
+
+    // Assign NonCircle to Ellipse.
+    public static Ellipse assign(NonCircle nonCircle) {
+        return Ellipse.ellipse(nonCircle.getA(), nonCircle.getB(), nonCircle.getCtr());
     }
 
     public double getA();

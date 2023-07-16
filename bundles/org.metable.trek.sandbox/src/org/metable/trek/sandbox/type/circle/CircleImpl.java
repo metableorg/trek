@@ -5,7 +5,17 @@ import org.metable.trek.sandbox.type.point.Point;
 
 public class CircleImpl implements Circle {
 
+    @Override
+    public String toString() {
+        return "CircleImpl [rep=" + rep + "]";
+    }
+
     static class Circle {
+        @Override
+        public String toString() {
+            return "Circle [ellipse=" + ellipse + "]";
+        }
+
         static boolean constraint(Ellipse ellipse) {
             return (ellipse.getA() == ellipse.getB());
         }

@@ -2,7 +2,7 @@
  * <code>
  *
  * // Type definition.
- * type Ellipse {
+ * type Ellipse extends PlanFigure {
  *
  *     // Possible representation with default name 'Ellipse'.
  *     rep {
@@ -34,8 +34,10 @@ package org.metable.trek.sandbox.type.ellipse;
 import java.util.Arrays;
 import java.util.List;
 
+import org.metable.trek.sandbox.type.Alpha;
 import org.metable.trek.sandbox.type.circle.Circle;
 import org.metable.trek.sandbox.type.noncircle.NonCircle;
+import org.metable.trek.sandbox.type.planefigure.PlaneFigure;
 import org.metable.trek.sandbox.type.point.Point;
 
 /**
@@ -71,10 +73,33 @@ public interface Ellipse {
     // Test for Ellipse type.
     public static boolean isType(Object value) {
         if (value instanceof Ellipse) {
-            return EllipseImpl.Ellipse.constraint(((EllipseImpl.Ellipse) value));
+            return true; 
+        }
+        
+        return false;
+    }
+
+    public static Ellipse treatAsEllipse(PlaneFigure planeFigure) {
+        Class<?> mst = Alpha.getMostSpecificType(planeFigure);
+
+        for (Class<?> type : Ellipse.getSubtypes()) {
+            if (type.isAssignableFrom(mst)) {
+                EllipseImpl ellipse = (EllipseImpl) planeFigure;
+                return ellipse(ellipse);
+            }
         }
 
-        return false;
+        if (Ellipse.class.isAssignableFrom(mst)) {
+            EllipseImpl ellipse = (EllipseImpl) planeFigure;
+            return ellipse(ellipse);
+        }
+
+        throw new java.lang.ClassCastException(
+                "Can not cast " + mst.getTypeName() + " to " + Circle.class.getTypeName());
+    }
+
+    public static PlaneFigure assign(Ellipse ellipse) {
+        return (PlaneFigure) ellipse;
     }
 
     public double getA();

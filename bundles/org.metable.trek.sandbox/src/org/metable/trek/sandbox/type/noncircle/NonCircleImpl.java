@@ -1,9 +1,10 @@
 package org.metable.trek.sandbox.type.noncircle;
 
 import org.metable.trek.sandbox.type.ellipse.Ellipse;
+import org.metable.trek.sandbox.type.planefigure.PlaneFigure;
 import org.metable.trek.sandbox.type.point.Point;
 
-public class NonCircleImpl implements NonCircle {
+public class NonCircleImpl implements PlaneFigure, Ellipse, NonCircle {
 
     static class NonCircle {
         static boolean constraint(Ellipse ellipse) {

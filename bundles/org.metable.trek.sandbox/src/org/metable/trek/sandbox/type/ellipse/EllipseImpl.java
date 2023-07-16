@@ -1,9 +1,21 @@
 package org.metable.trek.sandbox.type.ellipse;
 
+import org.metable.trek.sandbox.type.planefigure.PlaneFigure;
 import org.metable.trek.sandbox.type.point.Point;
 
-class EllipseImpl implements Ellipse {
+class EllipseImpl implements PlaneFigure, Ellipse {
+    
+    @Override
+    public String toString() {
+        return "EllipseImpl [rep=" + rep + "]";
+    }
+
     static class Ellipse {
+        @Override
+        public String toString() {
+            return "Ellipse [a=" + a + ", b=" + b + ", ctr=" + ctr + "]";
+        }
+
         static boolean constraint(Ellipse ellipse) {
             return (ellipse.a >= ellipse.b);
         }

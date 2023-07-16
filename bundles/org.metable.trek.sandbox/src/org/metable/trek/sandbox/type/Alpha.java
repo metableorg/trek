@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.metable.trek.sandbox.type.ellipse.Ellipse;
 import org.metable.trek.sandbox.type.linesegment.LineSegment;
+import org.metable.trek.sandbox.type.planefigure.PlaneFigure;
 import org.metable.trek.sandbox.type.point.Point;
 import org.metable.trek.sandbox.type.weight.Weight;
 
@@ -43,7 +43,7 @@ public interface Alpha {
     }
 
     public static List<Class<?>> getSubtypes() {
-        return Arrays.asList(Ellipse.class, Point.class, Weight.class, LineSegment.class);
+        return Arrays.asList(PlaneFigure.class, Point.class, Weight.class, LineSegment.class);
     }
 
     public static boolean isType(Object alpha) {

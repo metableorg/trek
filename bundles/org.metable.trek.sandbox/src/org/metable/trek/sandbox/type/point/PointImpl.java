@@ -1,7 +1,17 @@
 package org.metable.trek.sandbox.type.point;
 
 class PointImpl implements Point {
+    @Override
+    public String toString() {
+        return "PointImpl [cartesian=" + cartesian + ", polar=" + polar + "]";
+    }
+
     static class Cartesian {
+        @Override
+        public String toString() {
+            return "Cartesian [x=" + x + ", y=" + y + "]";
+        }
+
         final double x;
         final double y;
 
@@ -17,6 +27,11 @@ class PointImpl implements Point {
     }
 
     static class Polar {
+        @Override
+        public String toString() {
+            return "Polar [rho=" + rho + ", theta=" + theta + "]";
+        }
+
         static boolean constraint(Polar polar) {
             return (polar.theta >= 0.0 && polar.theta <= 360.0);
         }

@@ -3,11 +3,24 @@ package org.metable.trek.sandbox;
 import org.metable.trek.sandbox.type.Alpha;
 import org.metable.trek.sandbox.type.circle.Circle;
 import org.metable.trek.sandbox.type.ellipse.Ellipse;
+import org.metable.trek.sandbox.type.planefigure.PlaneFigure;
 import org.metable.trek.sandbox.type.weight.Weight;
 
 public class TestExamples {
 
     public static void main(String[] args) {
+
+        // PlaneFigure plane := Circle.circle();
+        PlaneFigure plane = Ellipse.assign(Circle.assign(Circle.circle()));
+
+        System.out.println("MST: " + Alpha.getMostSpecificType(plane));
+
+        // Circle c2 = treat_as_circle(plane);
+        Circle c1 = Circle.treatAsCircle(Ellipse.treatAsEllipse(plane));
+        c1 = Circle.treatAsCircle(plane);
+
+        System.out.println(c1);
+        
         Weight weight = Weight.pound();
         System.out.println(Alpha.getMostSpecificType(weight));
 

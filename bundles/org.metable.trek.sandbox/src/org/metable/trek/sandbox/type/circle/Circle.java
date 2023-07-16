@@ -40,6 +40,7 @@ import java.util.List;
 
 import org.metable.trek.sandbox.type.Alpha;
 import org.metable.trek.sandbox.type.ellipse.Ellipse;
+import org.metable.trek.sandbox.type.planefigure.PlaneFigure;
 import org.metable.trek.sandbox.type.point.Point;
 
 public interface Circle {
@@ -82,8 +83,18 @@ public interface Circle {
     }
 
     public static Circle treatAsCircle(Ellipse ellipse) {
-        assert (Circle.class.isAssignableFrom(Alpha.getMostSpecificType(ellipse)));
-        return circle(ellipse.getA(), ellipse.getCtr());
+        Class<?> mst = Alpha.getMostSpecificType(ellipse);
+
+        if (Circle.class.isAssignableFrom(mst)) {
+            return circle(ellipse.getA(), ellipse.getCtr());
+        }
+
+        throw new java.lang.ClassCastException(
+                "Can not cast " + mst.getTypeName() + " to " + Circle.class.getTypeName());
+    }
+
+    public static Circle treatAsCircle(PlaneFigure planeFigure) {
+        return Circle.treatAsCircle(Ellipse.treatAsEllipse(planeFigure));
     }
 
     public Point getCtr();
