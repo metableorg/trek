@@ -6,8 +6,9 @@ public class LineSegmentImpl implements LineSegment {
 
     static class LineSegment {
         static boolean constraint(LineSegment lineSegment) {
-            return (!lineSegment.begin.is_equal(lineSegment.end));
+            return (!(lineSegment.begin.isEqual(lineSegment.end)));
         }
+
         Point begin;
 
         Point end;
@@ -15,26 +16,29 @@ public class LineSegmentImpl implements LineSegment {
         LineSegment(Point begin, Point end) {
             this.begin = Point.point(begin);
             this.end = Point.point(end);
+            assert (constraint(this));
         }
     }
 
     LineSegment rep;
 
-    Point getBegin() {
+    @Override
+    public Point getBegin() {
         return Point.point(rep.begin);
     }
 
-    Point getEnd() {
+    @Override
+    public Point getEnd() {
         return Point.point(rep.end);
     }
 
-    void setBegin(Point begin) {
-        rep.begin = Point.point(begin);
-        assert (LineSegment.constraint(rep));
+    @Override
+    public void setBegin(Point begin) {
+        rep = new LineSegment(begin, rep.end);
     }
 
-    void setEnd(Point end) {
-        rep.end = Point.point(end);
-        assert (LineSegment.constraint(rep));
+    @Override
+    public void setEnd(Point end) {
+        rep = new LineSegment(rep.begin, end);
     }
 }

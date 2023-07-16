@@ -11,14 +11,17 @@ public class WeightImpl implements Weight {
 
         Gram(double g) {
             this.g = g;
+            assert (constraint(this));
         }
 
         Gram(Kilogram kilogram) {
             g = 0.00220462 * kilogram.kg;
+            assert (constraint(this));
         }
 
         Gram(Pound pound) {
             g = 2.20462 * pound.lb;
+            assert (constraint(this));
         }
     }
 
@@ -31,14 +34,17 @@ public class WeightImpl implements Weight {
 
         Kilogram(double kg) {
             this.kg = kg;
+            assert (constraint(this));
         }
 
         Kilogram(Gram gram) {
             kg = 0.00220462 * gram.g;
+            assert (constraint(this));
         }
 
         Kilogram(Pound pound) {
             kg = 2.20462 * pound.lb;
+            assert (constraint(this));
         }
     }
 
@@ -52,14 +58,17 @@ public class WeightImpl implements Weight {
 
         Pound(double lb) {
             this.lb = lb;
+            assert (constraint(this));
         }
 
         Pound(Gram gram) {
             lb = 0.00220462 * gram.g;
+            assert (constraint(this));
         }
 
         Pound(Kilogram kilogram) {
             lb = 2.20462 * kilogram.kg;
+            assert (constraint(this));
         }
     }
 
@@ -70,31 +79,39 @@ public class WeightImpl implements Weight {
     WeightImpl() {
     }
 
-    void setG(double g) {
-        gram = new Gram(g);
-        assert (Gram.constraint(gram));
+    @Override
+    public double getG() {
+        return gram.g;
+    }
 
+    @Override
+    public double getKg() {
+        return kilogram.kg;
+    }
+
+    @Override
+    public double getLb() {
+        return pound.lb;
+    }
+
+    @Override
+    public void setG(double g) {
+        gram = new Gram(g);
         kilogram = new Kilogram(gram);
         pound = new Pound(gram);
     }
 
-    void setKg(double kg) {
+    @Override
+    public void setKg(double kg) {
         kilogram = new Kilogram(kg);
-        assert (Kilogram.constraint(kilogram));
-
         pound = new Pound(kilogram);
         gram = new Gram(kilogram);
     }
 
-    void setLb(double lb) {
+    @Override
+    public void setLb(double lb) {
         pound = new Pound(lb);
-        assert (Pound.constraint(pound));
-
         kilogram = new Kilogram(pound);
         gram = new Gram(pound);
-    }
-
-    double getG() {
-        return gram.g;
     }
 }

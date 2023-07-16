@@ -18,34 +18,34 @@ public class TestExamples {
 
         // Assignment e := c;
         Ellipse e = Circle.assign(c);
-        Ellipse.setA(e, 21);
+        e.setA(21);
         System.out.println("MST: " + Alpha.getMostSpecificType(e));
 
-        Ellipse.setB(e, 21);
+        e.setB(21);
         System.out.println("MST: " + Alpha.getMostSpecificType(e));
-        
-        c = Circle.treat_as_circle(e);
-        
-        Circle.setR(c, 5); 
+
+        c = Circle.treatAsCircle(e);
+
+        c.setR(5);
 
         System.out.println("MST: " + Alpha.getMostSpecificType(Circle.assign(c)));
-        System.out.println("Radius: " + Circle.getR(c));
+        System.out.println("Radius: " + c.getR());
 
         e = Circle.assign(c);
 
-        System.out.println("A: " + Ellipse.getA(e));
-        System.out.println("B: " + Ellipse.getB(e));
-        
-        Ellipse.setA(e, 6);
-        System.out.println("MST: " + Alpha.getMostSpecificType(e));
-        System.out.println("A: " + Ellipse.getA(e));
-        System.out.println("B: " + Ellipse.getB(e));
+        System.out.println("A: " + e.getA());
+        System.out.println("B: " + e.getB());
 
-//       
+        e.setA(6);
+        System.out.println("MST: " + Alpha.getMostSpecificType(e));
+        System.out.println("A: " + e.getA());
+        System.out.println("B: " + e.getB());
+
+//
 //        // Type coercion c = treat_as_circle(e);
 //        c = Circle.circle(e);
 //        System.out.println("MST: " + c.getMostSpecificType());
-//        
+//
 //        System.out.println(c.getMostSpecificType());
 //
 //        System.out.println("MST: " + c.getMostSpecificType());
@@ -62,7 +62,7 @@ public class TestExamples {
 //        Ellipse ellipse = Ellipse.ellipse();
 //
 //        System.out.println("MST: " + ellipse.getMostSpecificType());
-//        
+//
 //        ellipse.setA(5);
 //        ellipse.setB(5);
 //

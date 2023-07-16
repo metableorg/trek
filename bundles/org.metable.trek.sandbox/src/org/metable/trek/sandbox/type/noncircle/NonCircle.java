@@ -1,26 +1,26 @@
 /**
- * <code> 
- * 
+ * <code>
+ *
  * type NonCircle extends Ellipse {
  *     rep NonCircle {
  *         Ellipse.a a;
  *         Ellipse.b b;
  *         Ellipse.ctr ctr;
- *         
+ *
  *         constraint {
  *             Ellipse.a > Ellipse.b;
  *         }
- *     
+ *
  *     not {
  *         Ellipse(1, 1, Cartesian(0, 0));
  *     }
- *     
+ *
  *     init {
  *         NonCircle(10, 7, Cartesian(0, 0);
  *     }
  * }
- * 
- * 
+ *
+ *
  * </code>
  */
 
@@ -34,18 +34,6 @@ import org.metable.trek.sandbox.type.elipse.Ellipse;
 import org.metable.trek.sandbox.type.point.Point;
 
 public interface NonCircle {
-
-    public static double getA(NonCircle nc) {
-        return ((NonCircleImpl) nc).getA();
-    }
-
-    public static double getB(NonCircle nc) {
-        return ((NonCircleImpl) nc).getB();
-    }
-
-    public static Point getCtr(NonCircle nc) {
-        return ((NonCircleImpl) nc).getCtr();
-    }
 
     public static List<Class<?>> getSubtypes() {
         return Collections.emptyList();
@@ -74,8 +62,6 @@ public interface NonCircle {
 
         nonCircle.rep = new NonCircleImpl.NonCircle(a, b, ctr);
 
-        assert (isType(nonCircle.rep.ellipse));
-
         return nonCircle;
     }
 
@@ -93,6 +79,12 @@ public interface NonCircle {
 
     public static NonCircle treat_as_non_circle(Ellipse ellipse) {
         assert (NonCircle.class.isAssignableFrom(Alpha.getMostSpecificType(ellipse)));
-        return nonCircle(Ellipse.getA(ellipse), Ellipse.getB(ellipse), Ellipse.getCtr(ellipse));
+        return nonCircle(ellipse.getA(), ellipse.getB(), ellipse.getCtr());
     }
+
+    public double getA();
+
+    public double getB();
+
+    public Point getCtr();
 }

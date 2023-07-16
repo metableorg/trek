@@ -7,13 +7,14 @@ public class CircleImpl implements Circle {
 
     static class Circle {
         static boolean constraint(Ellipse ellipse) {
-            return (Ellipse.getA(ellipse) == Ellipse.getB(ellipse));
+            return (ellipse.getA() == ellipse.getB());
         }
 
         Ellipse ellipse;
 
         Circle(double r, Point ctr) {
             ellipse = Ellipse.ellipse(r, r, ctr);
+            assert (constraint(ellipse));
         }
     }
 
@@ -27,19 +28,23 @@ public class CircleImpl implements Circle {
 
     Circle rep;
 
-    Point getCtr() {
-        return Ellipse.getCtr(rep.ellipse);
+    @Override
+    public Point getCtr() {
+        return Point.point(rep.ellipse.getCtr());
     }
 
-    double getR() {
-        return Ellipse.getA(rep.ellipse);
+    @Override
+    public double getR() {
+        return rep.ellipse.getA();
     }
 
-    void setCtr(Point point) {
-        Ellipse.setCtr(rep.ellipse, point);
+    @Override
+    public void setCtr(Point ctr) {
+        rep = new Circle(getR(), ctr);
     }
 
-    void setR(double r) {
-        rep.ellipse = Ellipse.ellipse(r, r, Ellipse.getCtr(rep.ellipse));
+    @Override
+    public void setR(double r) {
+        rep = new Circle(r, getCtr());
     }
 }

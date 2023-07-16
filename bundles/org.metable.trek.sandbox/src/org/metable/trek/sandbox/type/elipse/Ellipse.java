@@ -1,31 +1,31 @@
 /**
- * <code> 
- * 
+ * <code>
+ *
  * // Type definition.
  * type Ellipse {
- * 
+ *
  *     // Possible representation with default name 'Ellipse'.
  *     rep {
  *         double a;
  *         double b;
  *         Point ctr;
- *        
+ *
  *         // Constraint definition. A boolean expression that
  *         // is a function of this possible representation's attributes
  *         // only.
- *         //  
+ *         //
  *         // At least one attribute must be used in this expression.
  *         constraint {
  *             a >= b;
  *         }
  *     }
- *    
- *     // Default value. 
+ *
+ *     // Default value.
  *     init {
  *         Ellipse(10, 5, Cartesian(0, 0);
  *     }
  * }
- *     
+ *
  * </code>
  */
 
@@ -55,8 +55,6 @@ public interface Ellipse {
 
         ellipse.rep = new EllipseImpl.Ellipse(a, b, ctr);
 
-        assert (isType(ellipse));
-
         return ellipse;
     }
 
@@ -66,18 +64,6 @@ public interface Ellipse {
         return ellipse(otherImpl.getA(), otherImpl.getB(), otherImpl.getCtr());
     }
 
-    public static double getA(Ellipse e) {
-        return ((EllipseImpl) e).getA();
-    }
-
-    public static double getB(Ellipse e) {
-        return ((EllipseImpl) e).getB();
-    };
-
-    public static Point getCtr(Ellipse e) {
-        return ((EllipseImpl) e).getCtr();
-    }
-
     public static List<Class<?>> getSubtypes() {
         return Arrays.asList(Circle.class, NonCircle.class);
     }
@@ -85,21 +71,21 @@ public interface Ellipse {
     // Test for Ellipse type.
     public static boolean isType(Object value) {
         if (value instanceof Ellipse) {
-            return EllipseImpl.Ellipse.constraint(getA((Ellipse) value), getB((Ellipse) value));
+            return EllipseImpl.Ellipse.constraint(((EllipseImpl.Ellipse) value));
         }
 
         return false;
     }
 
-    public static void setA(Ellipse e, double a) {
-        ((EllipseImpl) e).setA(a);
-    }
+    public double getA();
 
-    public static void setB(Ellipse e, double b) {
-        ((EllipseImpl) e).setB(b);
-    }
+    public double getB();
 
-    public static void setCtr(Ellipse e, Point ctr) {
-        ((EllipseImpl) e).setCtr(ctr);
-    }
+    public Point getCtr();
+
+    public void setA(double a);
+
+    public void setB(double b);
+
+    public void setCtr(Point ctr);
 }

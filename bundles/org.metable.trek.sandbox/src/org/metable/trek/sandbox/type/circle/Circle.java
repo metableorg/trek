@@ -1,35 +1,35 @@
 /**
- * <code> 
+ * <code>
  *
  * // Single inheritance example.
- * 
+ *
  * type Circle extends Ellipse {
  *     rep {
  *         Ellipse.a r;     // r is an alias for Ellipse.a
  *         Ellipse.ctr ctr; // ctr is an alias for Ellipe.ctr
- *         
+ *
  *         constraint {
  *             Ellipse.a == Ellipse.b; // Same as r == Ellipse.b
  *         }
  *     }
- *     
+ *
  *     not {
  *         // Proof that Circle defines a proper subset of Ellipse.
  *         // The 'not' clause demonstrates that there exists at least one
  *         // valid Ellipse that is not a Circle.
  *         Ellipse(10, 5, Cartesian(0, 0));
  *     }
- *     
+ *
  *     init {
  *         Circle(10, Cartesian(0, 0);
  *     }
  * }
- * 
- * 
+ *
+ *
  * Circle circle;
  *
  * circle.setR(25.0);
- * 
+ *
  * </code>
  */
 
@@ -44,6 +44,11 @@ import org.metable.trek.sandbox.type.point.Point;
 
 public interface Circle {
 
+    // Assign Circle to Ellipse.
+    public static Ellipse assign(Circle circle) {
+        return Ellipse.ellipse(circle.getR(), circle.getR(), circle.getCtr());
+    }
+
     public static Circle circle() {
         return circle(10, Point.cartesian(0, 0));
     }
@@ -54,14 +59,6 @@ public interface Circle {
         circle.rep = new CircleImpl.Circle(r, ctr);
 
         return circle;
-    }
-
-    public static Point getCtr(Circle c) {
-        return ((CircleImpl) c).getCtr();
-    }
-
-    public static double getR(Circle c) {
-        return ((CircleImpl) c).getR();
     }
 
     public static List<Class<?>> getSubtypes() {
@@ -80,29 +77,16 @@ public interface Circle {
         return false;
     }
 
-    public static void setA(Circle c, double a) {
-        setR(c, a);
-    }
-
-    public static void setB(Circle c, double b) {
-        setR(c, b);
-    }
-
-    public static void setCtr(Circle c, Point ctr) {
-        ((CircleImpl) c).setCtr(ctr);
-    }
-
-    public static void setR(Circle c, double r) {
-        ((CircleImpl) c).setR(r);
-    }
-
-    // Assign Circle to Ellipse.
-    public static Ellipse assign(Circle circle) {
-        return Ellipse.ellipse(Circle.getR(circle), Circle.getR(circle), Circle.getCtr(circle));
-    }
-
-    public static Circle treat_as_circle(Ellipse ellipse) {
+    public static Circle treatAsCircle(Ellipse ellipse) {
         assert (Circle.class.isAssignableFrom(Alpha.getMostSpecificType(ellipse)));
-        return circle(Ellipse.getA(ellipse), Ellipse.getCtr(ellipse));
+        return circle(ellipse.getA(), ellipse.getCtr());
     }
+
+    public Point getCtr();
+
+    public double getR();
+
+    public void setCtr(Point ctr);
+
+    public void setR(double r);
 }

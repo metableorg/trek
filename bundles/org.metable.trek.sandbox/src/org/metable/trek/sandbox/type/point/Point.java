@@ -1,39 +1,39 @@
 /**
- * <code> 
- * 
+ * <code>
+ *
  *  type Point {
- *  
+ *
  *      rep Cartesian {
  *          double x;
  *          double y;
  *      }
- *      
+ *
  *      rep Polar {
  *          double rho;
  *          double theta;
- *          
+ *
  *          constraint {
  *              theta >= 0.0 && theta <= 360.0;
  *          }
  *      }
- *     
+ *
  *      // Show how to translate between possible representations.
- *      
+ *
  *      Cartesian from Polar {
  *          x = rho * cos(theta);
  *          y = rho * sin(theta);
  *      }
- *      
+ *
  *      Polar from Cartesian {
  *          rho = sqrt((x * x) + (y * y));
  *          theta = arctan(y/x);
  *      }
- *      
+ *
  *      init {
  *          Cartesian(0, 0);
  *      }
  *  }
- *  
+ *
  *  </code>
  */
 package org.metable.trek.sandbox.type.point;
@@ -79,17 +79,21 @@ public interface Point {
         return point;
     }
 
-    double getX();
+    public double getRho();
 
-    double getY();
+    public double getTheta();
 
-    boolean is_equal(Point end);
+    public double getX();
 
-    void setRho(double value);
+    public double getY();
 
-    void setTheta(double value);
+    boolean isEqual(Point other);
 
-    void setX(double value);
+    public void setRho(double rho);
 
-    void setY(double value);
+    public void setTheta(double theta);
+
+    public void setX(double x);
+
+    public void setY(double y);
 }

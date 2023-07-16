@@ -20,25 +20,44 @@ class PointImpl implements Point {
         static boolean constraint(Polar polar) {
             return (polar.theta >= 0.0 && polar.theta <= 360.0);
         }
+
         double rho;
 
         double theta;
 
         Polar(Cartesian cartesian) {
             rho = Math.sqrt((cartesian.x * cartesian.x) + (cartesian.y * cartesian.y));
-            theta = Math.asin(cartesian.y / cartesian.x);
+            if (cartesian.x > 0) {
+                theta = Math.toDegrees(Math.asin(cartesian.y / cartesian.x));
+            } else {
+                theta = 0;
+            }
+
+            assert (constraint(this));
         }
 
         Polar(double rho, double theta) {
             this.rho = rho;
             this.theta = theta;
+            assert (constraint(this));
         }
     }
 
     Cartesian cartesian;
 
     Polar polar;
+
     PointImpl() {
+    }
+
+    @Override
+    public double getRho() {
+        return polar.rho;
+    }
+
+    @Override
+    public double getTheta() {
+        return polar.theta;
     }
 
     @Override
@@ -52,12 +71,8 @@ class PointImpl implements Point {
     }
 
     @Override
-    public boolean is_equal(Point other) {
-        if (getX() != other.getX()) {
-            return false;
-        }
-
-        if (getY() != other.getY()) {
+    public boolean isEqual(Point other) {
+        if ((this.getX() != other.getX()) || (this.getY() != other.getY())) {
             return false;
         }
 
