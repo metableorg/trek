@@ -35,6 +35,11 @@ import org.metable.trek.sandbox.type.point.Point;
 
 public interface NonCircle {
 
+    // Assign NonCircle to Ellipse.
+    public static Ellipse assign(NonCircle nonCircle) {
+        return Ellipse.ellipse(nonCircle.getA(), nonCircle.getB(), nonCircle.getCtr());
+    }
+
     public static List<Class<?>> getSubtypes() {
         return Collections.emptyList();
     }
@@ -65,14 +70,6 @@ public interface NonCircle {
         return nonCircle;
     }
 
-    public static void setA(NonCircle nc, double a) {
-        ((NonCircleImpl) nc).setA(a);
-    }
-
-    public static void setB(NonCircle nc, double b) {
-        ((NonCircleImpl) nc).setB(b);
-    }
-
     public static void setCtr(NonCircle nc, Point ctr) {
         ((NonCircleImpl) nc).setCtr(ctr);
     }
@@ -82,14 +79,13 @@ public interface NonCircle {
         return nonCircle(ellipse.getA(), ellipse.getB(), ellipse.getCtr());
     }
 
-    // Assign NonCircle to Ellipse.
-    public static Ellipse assign(NonCircle nonCircle) {
-        return Ellipse.ellipse(nonCircle.getA(), nonCircle.getB(), nonCircle.getCtr());
-    }
-
     public double getA();
 
     public double getB();
 
     public Point getCtr();
+
+    public void setA(double a);
+
+    public void setB(double b);
 }

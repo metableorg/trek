@@ -4,7 +4,7 @@ import org.metable.trek.sandbox.type.planefigure.PlaneFigure;
 import org.metable.trek.sandbox.type.point.Point;
 
 class EllipseImpl implements PlaneFigure, Ellipse {
-    
+
     @Override
     public String toString() {
         return "EllipseImpl [rep=" + rep + "]";

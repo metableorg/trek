@@ -32,10 +32,6 @@ class PointImpl implements Point {
             return "Polar [rho=" + rho + ", theta=" + theta + "]";
         }
 
-        static boolean constraint(Polar polar) {
-            return (polar.theta >= 0.0 && polar.theta <= 360.0);
-        }
-
         double rho;
 
         double theta;
@@ -47,14 +43,11 @@ class PointImpl implements Point {
             } else {
                 theta = 0;
             }
-
-            assert (constraint(this));
         }
 
         Polar(double rho, double theta) {
             this.rho = rho;
             this.theta = theta;
-            assert (constraint(this));
         }
     }
 

@@ -4,6 +4,8 @@ import org.metable.trek.sandbox.type.Alpha;
 import org.metable.trek.sandbox.type.circle.Circle;
 import org.metable.trek.sandbox.type.ellipse.Ellipse;
 import org.metable.trek.sandbox.type.planefigure.PlaneFigure;
+import org.metable.trek.sandbox.type.polygon.Polygon;
+import org.metable.trek.sandbox.type.rectangle.Rectangle;
 import org.metable.trek.sandbox.type.weight.Weight;
 
 public class TestExamples {
@@ -13,14 +15,18 @@ public class TestExamples {
         // PlaneFigure plane := Circle.circle();
         PlaneFigure plane = Ellipse.assign(Circle.assign(Circle.circle()));
 
+        System.out.println(PlaneFigure.getArea(plane));
+
         System.out.println("MST: " + Alpha.getMostSpecificType(plane));
 
         // Circle c2 = treat_as_circle(plane);
         Circle c1 = Circle.treatAsCircle(Ellipse.treatAsEllipse(plane));
         c1 = Circle.treatAsCircle(plane);
 
+        c1 = Circle.treatAsCircle(Ellipse.translate(Circle.assign(c1), 5, 1000));
+
         System.out.println(c1);
-        
+
         Weight weight = Weight.pound();
         System.out.println(Alpha.getMostSpecificType(weight));
 
@@ -54,32 +60,11 @@ public class TestExamples {
         System.out.println("A: " + e.getA());
         System.out.println("B: " + e.getB());
 
-//
-//        // Type coercion c = treat_as_circle(e);
-//        c = Circle.circle(e);
-//        System.out.println("MST: " + c.getMostSpecificType());
-//
-//        System.out.println(c.getMostSpecificType());
-//
-//        System.out.println("MST: " + c.getMostSpecificType());
-//
-//        c.setA(11);
-//        c.setB(3);
-//
-//        System.out.println("MST: " + c.getMostSpecificType());
-//
-//        c.setB(11);
-//
-//        System.out.println("MST: " + c.getMostSpecificType());
-//
-//        Ellipse ellipse = Ellipse.ellipse();
-//
-//        System.out.println("MST: " + ellipse.getMostSpecificType());
-//
-//        ellipse.setA(5);
-//        ellipse.setB(5);
-//
-//        System.out.println("MST: " + ellipse.getMostSpecificType());
+        Rectangle r = Rectangle.rectangle();
+
+        plane = Polygon.assign(Rectangle.assign(r));
+
+        System.out.println(PlaneFigure.getArea(plane));
     }
 
 }

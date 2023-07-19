@@ -73,9 +73,9 @@ public interface Ellipse {
     // Test for Ellipse type.
     public static boolean isType(Object value) {
         if (value instanceof Ellipse) {
-            return true; 
+            return true;
         }
-        
+
         return false;
     }
 
@@ -95,7 +95,7 @@ public interface Ellipse {
         }
 
         throw new java.lang.ClassCastException(
-                "Can not cast " + mst.getTypeName() + " to " + Circle.class.getTypeName());
+                "Can not cast " + mst.getTypeName() + " to " + Ellipse.class.getTypeName());
     }
 
     public static PlaneFigure assign(Ellipse ellipse) {
@@ -113,4 +113,14 @@ public interface Ellipse {
     public void setB(double b);
 
     public void setCtr(Point ctr);
+
+    public static Ellipse translate(Ellipse e, double x, double y) {
+        e.setCtr(Point.cartesian(e.getCtr().getX() + x, e.getCtr().getY() + y));
+        return ellipse(e);
+    }
+
+    public static double getArea(Ellipse e) {
+        return Math.PI * e.getA() * e.getB();
+    }
+
 }
