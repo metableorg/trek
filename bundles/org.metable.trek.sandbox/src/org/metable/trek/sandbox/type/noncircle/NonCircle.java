@@ -44,6 +44,11 @@ public interface NonCircle {
         return Collections.emptyList();
     }
 
+    public static boolean instanceOfNonCircle(Object other) {
+        Class<?> mst = Alpha.getMostSpecificType(other);
+        return NonCircle.class.isAssignableFrom(mst);
+    }
+
     public static boolean isType(Object value) {
         if (value instanceof NonCircle) {
             return true;
@@ -75,8 +80,12 @@ public interface NonCircle {
     }
 
     public static NonCircle treatAsNonCircle(Ellipse ellipse) {
-        assert (NonCircle.class.isAssignableFrom(Alpha.getMostSpecificType(ellipse)));
-        return nonCircle(ellipse.getA(), ellipse.getB(), ellipse.getCtr());
+        if (instanceOfNonCircle(ellipse)) {
+            return nonCircle(ellipse.getA(), ellipse.getB(), ellipse.getCtr());
+        }
+
+        throw new java.lang.ClassCastException(
+                "Can not cast " + Ellipse.class.getTypeName() + " to " + NonCircle.class.getTypeName());
     }
 
     public double getA();

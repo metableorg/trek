@@ -45,6 +45,10 @@ import org.metable.trek.sandbox.type.point.Point;
  */
 public interface Ellipse {
 
+    public static PlaneFigure assign(Ellipse ellipse) {
+        return (PlaneFigure) ellipse;
+    }
+
     // Default Ellipse possible representation selector.
     public static Ellipse ellipse() {
         return ellipse(10, 5, Point.cartesian(0, 0));
@@ -66,6 +70,13 @@ public interface Ellipse {
         return ellipse(otherImpl.getA(), otherImpl.getB(), otherImpl.getCtr());
     }
 
+    public static double getArea(Ellipse e) {
+        if (Circle.instanceOfCircle(e)) {
+            return Circle.getArea(Circle.treatAsCircle(e));
+        }
+        return Math.PI * e.getA() * e.getB();
+    }
+
     public static List<Class<?>> getSubtypes() {
         return Arrays.asList(Circle.class, NonCircle.class);
     }
@@ -77,6 +88,11 @@ public interface Ellipse {
         }
 
         return false;
+    }
+
+    public static Ellipse translate(Ellipse e, double x, double y) {
+        e.setCtr(Point.cartesian(e.getCtr().getX() + x, e.getCtr().getY() + y));
+        return ellipse(e);
     }
 
     public static Ellipse treatAsEllipse(PlaneFigure planeFigure) {
@@ -98,10 +114,6 @@ public interface Ellipse {
                 "Can not cast " + mst.getTypeName() + " to " + Ellipse.class.getTypeName());
     }
 
-    public static PlaneFigure assign(Ellipse ellipse) {
-        return (PlaneFigure) ellipse;
-    }
-
     public double getA();
 
     public double getB();
@@ -113,14 +125,5 @@ public interface Ellipse {
     public void setB(double b);
 
     public void setCtr(Point ctr);
-
-    public static Ellipse translate(Ellipse e, double x, double y) {
-        e.setCtr(Point.cartesian(e.getCtr().getX() + x, e.getCtr().getY() + y));
-        return ellipse(e);
-    }
-
-    public static double getArea(Ellipse e) {
-        return Math.PI * e.getA() * e.getB();
-    }
 
 }

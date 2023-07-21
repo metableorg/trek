@@ -1,20 +1,10 @@
 package org.metable.trek.sandbox.type.point;
 
 class PointImpl implements Point {
-    @Override
-    public String toString() {
-        return "PointImpl [cartesian=" + cartesian + ", polar=" + polar + "]";
-    }
-
     static class Cartesian {
-        @Override
-        public String toString() {
-            return "Cartesian [x=" + x + ", y=" + y + "]";
-        }
-
         final double x;
-        final double y;
 
+        final double y;
         Cartesian(double x, double y) {
             this.x = x;
             this.y = y;
@@ -24,14 +14,14 @@ class PointImpl implements Point {
             x = polar.rho * Math.cos(polar.theta);
             y = polar.rho * Math.sin(polar.theta);
         }
+
+        @Override
+        public String toString() {
+            return "Cartesian [x=" + x + ", y=" + y + "]";
+        }
     }
 
     static class Polar {
-        @Override
-        public String toString() {
-            return "Polar [rho=" + rho + ", theta=" + theta + "]";
-        }
-
         double rho;
 
         double theta;
@@ -48,6 +38,11 @@ class PointImpl implements Point {
         Polar(double rho, double theta) {
             this.rho = rho;
             this.theta = theta;
+        }
+
+        @Override
+        public String toString() {
+            return "Polar [rho=" + rho + ", theta=" + theta + "]";
         }
     }
 
@@ -109,5 +104,10 @@ class PointImpl implements Point {
     public void setY(double y) {
         this.cartesian = new Cartesian(cartesian.x, y);
         this.polar = new Polar(cartesian);
+    }
+
+    @Override
+    public String toString() {
+        return "PointImpl [cartesian=" + cartesian + ", polar=" + polar + "]";
     }
 }

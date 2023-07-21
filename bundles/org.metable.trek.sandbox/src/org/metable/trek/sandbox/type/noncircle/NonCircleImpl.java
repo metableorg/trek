@@ -10,7 +10,7 @@ public class NonCircleImpl implements NonCircle {
             return (ellipse.getA() > ellipse.getB());
         }
 
-        Ellipse ellipse;
+        final Ellipse ellipse;
 
         NonCircle(double a, double b, Point ctr) {
             ellipse = Ellipse.ellipse(a, b, ctr);

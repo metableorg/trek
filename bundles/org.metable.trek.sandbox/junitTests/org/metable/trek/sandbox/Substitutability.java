@@ -11,6 +11,9 @@ import org.metable.trek.sandbox.type.circle.Circle;
 import org.metable.trek.sandbox.type.ellipse.Ellipse;
 import org.metable.trek.sandbox.type.noncircle.NonCircle;
 import org.metable.trek.sandbox.type.planefigure.PlaneFigure;
+import org.metable.trek.sandbox.type.polygon.Polygon;
+import org.metable.trek.sandbox.type.rectangle.Rectangle;
+import org.metable.trek.sandbox.type.square.Square;
 
 public class Substitutability {
 
@@ -52,5 +55,29 @@ public class Substitutability {
 
         // Assert.
         Assert.assertEquals(NonCircle.class, Alpha.getMostSpecificType(plane));
+    }
+
+    @Test
+    public void planeFigureGetAreaForSquare() {
+        // Arrange.
+        Square s = Square.square();
+
+        // Act.
+        final double area = PlaneFigure.getArea(Polygon.assign(Rectangle.assign(Square.assign(s))));
+
+        // Assert.
+        Assert.assertEquals(4.0, area, 0.01);
+    }
+
+    @Test
+    public void planeFigureGetAreaForCircle() {
+        // Arrange.
+        Circle c = Circle.circle();
+
+        // Act.
+        final double area = PlaneFigure.getArea(Ellipse.assign(Circle.assign(c)));
+
+        // Assert.
+        Assert.assertEquals(314.15926, area, 0.00001);
     }
 }

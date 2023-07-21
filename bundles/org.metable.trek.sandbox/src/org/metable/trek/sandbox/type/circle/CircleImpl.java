@@ -5,26 +5,21 @@ import org.metable.trek.sandbox.type.point.Point;
 
 public class CircleImpl implements Circle {
 
-    @Override
-    public String toString() {
-        return "CircleImpl [rep=" + rep + "]";
-    }
-
     static class Circle {
-        @Override
-        public String toString() {
-            return "Circle [ellipse=" + ellipse + "]";
-        }
-
         static boolean constraint(Ellipse ellipse) {
             return (ellipse.getA() == ellipse.getB());
         }
 
-        Ellipse ellipse;
+        final Ellipse ellipse;
 
         Circle(double r, Point ctr) {
             ellipse = Ellipse.ellipse(r, r, ctr);
             assert (constraint(ellipse));
+        }
+
+        @Override
+        public String toString() {
+            return "Circle [ellipse=" + ellipse + "]";
         }
     }
 
@@ -56,5 +51,10 @@ public class CircleImpl implements Circle {
     @Override
     public void setR(double r) {
         rep = new Circle(r, getCtr());
+    }
+
+    @Override
+    public String toString() {
+        return "CircleImpl [rep=" + rep + "]";
     }
 }

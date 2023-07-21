@@ -6,8 +6,9 @@
  *
  *     // Possible representation with default name 'Rectangle'.
  *     rep {
- *         Point a;
- *         Point b;
+ *         Point ctr;
+ *         double length;
+ *         double width;
  *
  *         // Constraint definition. A boolean expression that
  *         // is a function of this possible representation's attributes
@@ -15,16 +16,16 @@
  *         //
  *         // At least one attribute must be used in this expression.
  *         constraint {
- *             double length = a.x - b.x;
- *             double width = a.y - b.y;
- *             ((a.x > b.x) && (a.y > b.y) && (length != width));
+ *             (length > 0) && (width > 0) && (length >= width);
  *         }
  *     }
  *
  *     // Default value.
  *     init {
- *         Rectangle(Cartesian(2, 1), Cartesian(-2, -1));
+ *         Rectangle(Cartesian(0, 0), 2, 1);
  *     }
+ *     
+ *     Point getCtr();
  *     
  *     double getLength();
  *     
@@ -36,12 +37,13 @@
 
 package org.metable.trek.sandbox.type.rectangle;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import org.metable.trek.sandbox.type.Alpha;
 import org.metable.trek.sandbox.type.point.Point;
 import org.metable.trek.sandbox.type.polygon.Polygon;
+import org.metable.trek.sandbox.type.square.Square;
 
 /**
  * Interface Rectangle
@@ -52,8 +54,16 @@ public interface Rectangle {
         return (Polygon) rectangle;
     }
 
+    public static double getArea(Rectangle r) {
+        if (Square.instanceOfSquare(r)) {
+            return Square.getArea(Square.treatAsSquare(r));
+        }
+
+        return r.getLength() * r.getWidth();
+    }
+
     public static List<Class<?>> getSubtypes() {
-        return Collections.emptyList();
+        return Arrays.asList(Square.class);
     }
 
     // Test for Rectangle type.
@@ -67,15 +77,15 @@ public interface Rectangle {
 
     // Default Rectangle possible representation selector.
     public static Rectangle rectangle() {
-        return rectangle(Point.cartesian(2, 1), Point.cartesian(-2, -1));
+        return rectangle(Point.cartesian(0, 0), 2, 1);
     }
 
     // The Rectangle possible representation selector.
-    public static Rectangle rectangle(Point a, Point b) {
+    public static Rectangle rectangle(Point ctr, double length, double width) {
 
         RectangleImpl rectangle = new RectangleImpl();
 
-        rectangle.rep = new RectangleImpl.Rectangle(a, b);
+        rectangle.rep = new RectangleImpl.Rectangle(ctr, length, width);
 
         return rectangle;
     }
@@ -83,7 +93,7 @@ public interface Rectangle {
     // Copy Rectangle selector.
     public static Rectangle rectangle(Rectangle other) {
         RectangleImpl otherImpl = (RectangleImpl) other;
-        return rectangle(otherImpl.getA(), otherImpl.getB());
+        return rectangle(otherImpl.getCtr(), otherImpl.getLength(), otherImpl.getWidth());
     }
 
     public static Rectangle treatAsRectangle(Polygon polygon) {
@@ -105,23 +115,15 @@ public interface Rectangle {
                 "Can not cast " + mst.getTypeName() + " to " + Rectangle.class.getTypeName());
     }
 
-    public Point getA();
+    public Point getCtr();
 
-    public Point getB();
+    public double getLength();
 
-    public void setA(Point a);
+    public double getWidth();
 
-    public void setB(Point b);
+    public void setCtr(Point ctr);
 
-    public static double getLength(Rectangle r) {
-        return r.getA().getX() - r.getB().getX();
-    }
+    public void setLength(double length);
 
-    public static double getWidth(Rectangle r) {
-        return r.getA().getY() - r.getB().getY();
-    }
-
-    public static double getArea(Rectangle r) {
-        return getLength(r) * getWidth(r);
-    }
+    public void setWidth(double width);
 }

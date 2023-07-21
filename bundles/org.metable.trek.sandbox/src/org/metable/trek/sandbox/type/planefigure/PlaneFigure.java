@@ -20,6 +20,16 @@ import org.metable.trek.sandbox.type.polygon.Polygon;
 
 public interface PlaneFigure {
 
+    public static double getArea(PlaneFigure plane) {
+        if (plane instanceof Ellipse) {
+            return Ellipse.getArea((Ellipse) plane);
+        } else if (plane instanceof Polygon) {
+            return Polygon.getArea((Polygon) plane);
+        }
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
     public static List<Class<?>> getSubtypes() {
         return Arrays.asList(Ellipse.class, Polygon.class);
     }
@@ -30,15 +40,5 @@ public interface PlaneFigure {
         }
 
         return false;
-    }
-
-    public static double getArea(PlaneFigure plane) {
-        if (plane instanceof Ellipse) {
-            return Ellipse.getArea((Ellipse) plane);
-        } else if (plane instanceof Polygon) {
-            return Polygon.getArea((Polygon) plane);
-        }
-
-        throw new java.lang.UnsupportedOperationException();
     }
 }

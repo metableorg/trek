@@ -19,6 +19,18 @@ import org.metable.trek.sandbox.type.rectangle.Rectangle;
 
 public interface Polygon extends PlaneFigure {
 
+    public static PlaneFigure assign(Polygon polygon) {
+        return (PlaneFigure) polygon;
+    }
+
+    public static double getArea(PlaneFigure plane) {
+        if (plane instanceof Rectangle) {
+            return Rectangle.getArea((Rectangle) plane);
+        }
+
+        throw new java.lang.UnsupportedOperationException();
+    }
+
     public static List<Class<?>> getSubtypes() {
         return Arrays.asList(Rectangle.class);
     }
@@ -31,16 +43,8 @@ public interface Polygon extends PlaneFigure {
         return false;
     }
 
-    public static PlaneFigure assign(Polygon polygon) {
-        return (PlaneFigure) polygon;
-    }
-
-    public static double getArea(PlaneFigure plane) {
-        if (plane instanceof Rectangle) {
-            return Rectangle.getArea((Rectangle) plane);
-        }
-
-        throw new java.lang.UnsupportedOperationException();
+    public static Polygon treatAsPolygon(PlaneFigure plane) {
+        return (Polygon) plane;
     }
 
 }

@@ -5,31 +5,26 @@ import org.metable.trek.sandbox.type.polygon.Polygon;
 
 class RectangleImpl implements Polygon, Rectangle {
 
-    @Override
-    public String toString() {
-        return "RectangleImpl [rep=" + rep + "]";
-    }
-
     static class Rectangle {
-        @Override
-        public String toString() {
-            return "Rectangle [a=" + a + ", b=" + b + "]";
-        }
 
         static boolean constraint(Rectangle rectangle) {
-            final double length = rectangle.a.getX() - rectangle.b.getX();
-            final double width = rectangle.a.getY() - rectangle.b.getY();
-            return (rectangle.a.getX() > rectangle.b.getX())
-                    && (rectangle.a.getY() > rectangle.b.getY() && (length != width));
+            return (rectangle.length > 0) && (rectangle.width > 0) && (rectangle.length >= rectangle.width);
         }
 
-        Point a;
-        Point b;
+        final Point ctr;
 
-        Rectangle(Point a, Point b) {
-            this.a = Point.point(a);
-            this.b = Point.point(b);
+        final double length;
+        final double width;
+        Rectangle(Point ctr, double length, double width) {
+            this.ctr = Point.point(ctr);
+            this.length = length;
+            this.width = width;
             assert (constraint(this));
+        }
+
+        @Override
+        public String toString() {
+            return "Rectangle [ctr=" + ctr + ", length=" + length + ", width=" + width + "]";
         }
     }
 
@@ -39,22 +34,37 @@ class RectangleImpl implements Polygon, Rectangle {
     }
 
     @Override
-    public Point getA() {
-        return Point.point(rep.a);
+    public Point getCtr() {
+        return Point.point(rep.ctr);
     }
 
     @Override
-    public void setA(Point a) {
-        rep = new Rectangle(a, rep.b);
+    public double getLength() {
+        return rep.length;
     }
 
     @Override
-    public Point getB() {
-        return Point.point(rep.b);
+    public double getWidth() {
+        return rep.width;
     }
 
     @Override
-    public void setB(Point b) {
-        rep = new Rectangle(rep.a, b);
+    public void setCtr(Point ctr) {
+        rep = new Rectangle(ctr, rep.length, rep.width);
+    }
+
+    @Override
+    public void setLength(double length) {
+        rep = new Rectangle(rep.ctr, length, rep.width);
+    }
+
+    @Override
+    public void setWidth(double width) {
+        rep = new Rectangle(rep.ctr, rep.length, width);
+    }
+
+    @Override
+    public String toString() {
+        return "RectangleImpl [rep=" + rep + "]";
     }
 }

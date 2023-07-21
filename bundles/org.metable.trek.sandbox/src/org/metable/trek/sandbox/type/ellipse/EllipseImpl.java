@@ -5,31 +5,26 @@ import org.metable.trek.sandbox.type.point.Point;
 
 class EllipseImpl implements PlaneFigure, Ellipse {
 
-    @Override
-    public String toString() {
-        return "EllipseImpl [rep=" + rep + "]";
-    }
-
     static class Ellipse {
-        @Override
-        public String toString() {
-            return "Ellipse [a=" + a + ", b=" + b + ", ctr=" + ctr + "]";
-        }
-
         static boolean constraint(Ellipse ellipse) {
             return (ellipse.a >= ellipse.b);
         }
 
-        double a;
-        double b;
+        final double a;
 
-        Point ctr;
+        final double b;
+        final Point ctr;
 
         Ellipse(double a, double b, Point ctr) {
             this.a = a;
             this.b = b;
             this.ctr = Point.point(ctr);
             assert (constraint(this));
+        }
+
+        @Override
+        public String toString() {
+            return "Ellipse [a=" + a + ", b=" + b + ", ctr=" + ctr + "]";
         }
     }
 
@@ -66,5 +61,10 @@ class EllipseImpl implements PlaneFigure, Ellipse {
     @Override
     public void setCtr(Point ctr) {
         rep = new Ellipse(rep.a, rep.b, ctr);
+    }
+
+    @Override
+    public String toString() {
+        return "EllipseImpl [rep=" + rep + "]";
     }
 }

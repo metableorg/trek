@@ -54,6 +54,10 @@ public interface Circle {
         return circle(10, Point.cartesian(0, 0));
     }
 
+    public static Circle circle(Circle circle) {
+        return circle(circle.getR(), circle.getCtr());
+    }
+
     public static Circle circle(double r, Point ctr) {
         CircleImpl circle = new CircleImpl();
 
@@ -62,12 +66,17 @@ public interface Circle {
         return circle;
     }
 
-    public static Circle circle(Circle circle) {
-        return circle(circle.getR(), circle.getCtr());
+    public static double getArea(Circle circle) {
+        return Math.PI * (circle.getR() * circle.getR());
     }
 
     public static List<Class<?>> getSubtypes() {
         return Collections.emptyList();
+    }
+
+    public static boolean instanceOfCircle(Object other) {
+        Class<?> mst = Alpha.getMostSpecificType(other);
+        return Circle.class.isAssignableFrom(mst);
     }
 
     public static boolean isType(Object value) {
@@ -83,14 +92,12 @@ public interface Circle {
     }
 
     public static Circle treatAsCircle(Ellipse ellipse) {
-        Class<?> mst = Alpha.getMostSpecificType(ellipse);
-
-        if (Circle.class.isAssignableFrom(mst)) {
+        if (instanceOfCircle(ellipse)) {
             return circle(ellipse.getA(), ellipse.getCtr());
         }
 
         throw new java.lang.ClassCastException(
-                "Can not cast " + mst.getTypeName() + " to " + Circle.class.getTypeName());
+                "Can not cast " + Ellipse.class.getTypeName() + " to " + Circle.class.getTypeName());
     }
 
     public static Circle treatAsCircle(PlaneFigure planeFigure) {
