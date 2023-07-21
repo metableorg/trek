@@ -47,4 +47,8 @@ public interface Polygon extends PlaneFigure {
         return (Polygon) plane;
     }
 
+    public static boolean instanceOfPolygon(Object other) {
+        return other instanceof Polygon;
+    }
+
 }

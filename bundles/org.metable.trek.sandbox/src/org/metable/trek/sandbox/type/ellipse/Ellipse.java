@@ -96,22 +96,25 @@ public interface Ellipse {
     }
 
     public static Ellipse treatAsEllipse(PlaneFigure planeFigure) {
-        Class<?> mst = Alpha.getMostSpecificType(planeFigure);
-
-        for (Class<?> type : Ellipse.getSubtypes()) {
-            if (type.isAssignableFrom(mst)) {
-                EllipseImpl ellipse = (EllipseImpl) planeFigure;
-                return ellipse(ellipse);
-            }
-        }
-
-        if (Ellipse.class.isAssignableFrom(mst)) {
+        if (instanceOfEllipse(planeFigure)) {
             EllipseImpl ellipse = (EllipseImpl) planeFigure;
             return ellipse(ellipse);
         }
 
         throw new java.lang.ClassCastException(
-                "Can not cast " + mst.getTypeName() + " to " + Ellipse.class.getTypeName());
+                "Can not cast " + PlaneFigure.class.getTypeName() + " to " + Ellipse.class.getTypeName());
+    }
+
+    public static boolean instanceOfEllipse(Object other) {
+        Class<?> mst = Alpha.getMostSpecificType(other);
+
+        for (Class<?> type : Ellipse.getSubtypes()) {
+            if (type.isAssignableFrom(mst)) {
+                return true;
+            }
+        }
+
+        return Ellipse.class.isAssignableFrom(mst);
     }
 
     public double getA();

@@ -77,7 +77,7 @@ public interface Rectangle {
 
     // Default Rectangle possible representation selector.
     public static Rectangle rectangle() {
-        return rectangle(Point.cartesian(0, 0), 2, 1);
+        return rectangle(Point.cartesian(0, 0), 10, 5);
     }
 
     // The Rectangle possible representation selector.
@@ -97,22 +97,25 @@ public interface Rectangle {
     }
 
     public static Rectangle treatAsRectangle(Polygon polygon) {
-        Class<?> mst = Alpha.getMostSpecificType(polygon);
-
-        for (Class<?> type : Rectangle.getSubtypes()) {
-            if (type.isAssignableFrom(mst)) {
-                RectangleImpl rectangle = (RectangleImpl) polygon;
-                return rectangle(rectangle);
-            }
-        }
-
-        if (Rectangle.class.isAssignableFrom(mst)) {
+        if (instanceOfRectangle(polygon)) {
             RectangleImpl rectangle = (RectangleImpl) polygon;
             return rectangle(rectangle);
         }
 
         throw new java.lang.ClassCastException(
-                "Can not cast " + mst.getTypeName() + " to " + Rectangle.class.getTypeName());
+                "Can not cast " + Polygon.class.getTypeName() + " to " + Rectangle.class.getTypeName());
+    }
+
+    public static boolean instanceOfRectangle(Object other) {
+        Class<?> mst = Alpha.getMostSpecificType(other);
+
+        for (Class<?> type : Rectangle.getSubtypes()) {
+            if (type.isAssignableFrom(mst)) {
+                return true;
+            }
+        }
+
+        return Rectangle.class.isAssignableFrom(mst);
     }
 
     public Point getCtr();

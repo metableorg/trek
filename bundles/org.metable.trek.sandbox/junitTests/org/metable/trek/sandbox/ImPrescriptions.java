@@ -16,15 +16,15 @@ public class ImPrescriptions {
     public static void tearDownAfterClass() throws Exception {
     }
 
+    @Test
+    public void im_prescription_1_types_are_sets() {
+    }
+
     @Before
     public void setUp() throws Exception {
     }
 
     @After
     public void tearDown() throws Exception {
-    }
-
-    @Test
-    public void im_prescription_1_types_are_sets() {
     }
 }

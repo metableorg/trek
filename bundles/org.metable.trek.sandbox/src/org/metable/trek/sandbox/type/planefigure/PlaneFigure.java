@@ -21,7 +21,7 @@ import org.metable.trek.sandbox.type.polygon.Polygon;
 public interface PlaneFigure {
 
     public static double getArea(PlaneFigure plane) {
-        if (plane instanceof Ellipse) {
+        if (Ellipse.instanceOfEllipse(plane)) {
             return Ellipse.getArea((Ellipse) plane);
         } else if (plane instanceof Polygon) {
             return Polygon.getArea((Polygon) plane);
@@ -40,5 +40,9 @@ public interface PlaneFigure {
         }
 
         return false;
+    }
+
+    public static boolean instanceOfPlaneFigure(Object other) {
+        return other instanceof PlaneFigure;
     }
 }
