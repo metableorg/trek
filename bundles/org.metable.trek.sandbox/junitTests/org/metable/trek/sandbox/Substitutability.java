@@ -14,7 +14,7 @@ import org.metable.trek.sandbox.type.square.Square;
 public class Substitutability {
 
     @Test
-    public void circle_is_assignable_to_Ellipse() {
+    public void circle_is_assignable_to_ellipse() {
         // Arrange.
         Circle c = Circle.circle();
 
@@ -29,6 +29,18 @@ public class Substitutability {
     public void circle_is_instance_of_ellipse() {
         // Assert.
         Assert.assertTrue(Ellipse.instanceOfEllipse(Circle.circle()));
+    }
+
+    @Test
+    public void ellipse_is_assignable_to_plane_figure() {
+        // Arrange.
+        Ellipse e = Ellipse.ellipse();
+
+        // Act.
+        PlaneFigure p = Ellipse.assign(e);
+
+        // Assert.
+        Assert.assertEquals(NonCircle.class, Alpha.getMostSpecificType(p));
     }
 
     @Test
@@ -110,6 +122,36 @@ public class Substitutability {
     }
 
     @Test
+    public void polygon_is_assignable_to_plane_figure() {
+        // Arrange.
+        Polygon p = Rectangle.assign(Rectangle.rectangle());
+
+        // Act.
+        PlaneFigure plane = Polygon.assign(p);
+
+        // Assert.
+        Assert.assertEquals(Rectangle.class, Alpha.getMostSpecificType(plane));
+    }
+
+    @Test
+    public void polygon_is_instance_of_plane_figure() {
+        // Assert.
+        Assert.assertTrue(PlaneFigure.instanceOfPlaneFigure(Rectangle.rectangle()));
+    }
+
+    @Test
+    public void rectangle_is_assignable_to_polygon() {
+        // Arrange.
+        Rectangle r = Rectangle.rectangle();
+
+        // Act.
+        Polygon p = Rectangle.assign(r);
+
+        // Assert.
+        Assert.assertEquals(Rectangle.class, Alpha.getMostSpecificType(p));
+    }
+
+    @Test
     public void rectangle_is_instance_of_polygon() {
         // Assert.
         Assert.assertTrue(Polygon.instanceOfPolygon(Rectangle.rectangle()));
@@ -119,6 +161,19 @@ public class Substitutability {
     public void rectangle_is_instance_of_rectangle() {
         // Assert.
         Assert.assertTrue(Rectangle.instanceOfRectangle(Rectangle.rectangle()));
+    }
+
+    @Test
+    public void square_is_assignable_to_rectangle() {
+        // Arrange.
+        Square s = Square.square();
+
+        // Act.
+        Rectangle r = Square.assign(s);
+        r.setLength(500);
+
+        // Assert.
+        Assert.assertEquals(Rectangle.class, Alpha.getMostSpecificType(r));
     }
 
     @Test
