@@ -129,4 +129,24 @@ public interface Rectangle {
     public void setLength(double length);
 
     public void setWidth(double width);
+
+    public static boolean isEqual(Rectangle left, Rectangle right) {
+        if (Square.instanceOfSquare(left)) {
+            return Square.isEqual(Square.treatAsSquare(left), Square.treatAsSquare(right));
+        }
+
+        if (!Point.isEqual(left.getCtr(), right.getCtr())) {
+            return false;
+        }
+
+        if (left.getLength() != right.getLength()) {
+            return false;
+        }
+
+        if (left.getWidth() != right.getWidth()) {
+            return false;
+        }
+
+        return true;
+    }
 }

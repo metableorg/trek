@@ -113,4 +113,16 @@ public interface Square {
     public void setCtr(Point ctr);
 
     public void setLength(double length);
+
+    public static boolean isEqual(Square left, Square right) {
+        if (!Point.isEqual(left.getCtr(), right.getCtr())) {
+            return false;
+        }
+        
+        if (left.getLength() != right.getLength()) {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -23,9 +23,9 @@ public interface Polygon extends PlaneFigure {
         return (PlaneFigure) polygon;
     }
 
-    public static double getArea(PlaneFigure plane) {
-        if (plane instanceof Rectangle) {
-            return Rectangle.getArea((Rectangle) plane);
+    public static double getArea(Polygon polygon) {
+        if (polygon instanceof Rectangle) {
+            return Rectangle.getArea((Rectangle) polygon);
         }
 
         throw new java.lang.UnsupportedOperationException();
@@ -48,7 +48,19 @@ public interface Polygon extends PlaneFigure {
     }
 
     public static boolean instanceOfPolygon(Object other) {
-        return other instanceof Polygon;
+        if (Rectangle.instanceOfRectangle(other)) {
+            return true;
+        }
+
+        return Polygon.isType(other);
+    }
+
+    public static boolean isEqual(Polygon left, Polygon right) {
+        if (Rectangle.instanceOfRectangle(left)) {
+            return Rectangle.isEqual(Rectangle.treatAsRectangle(left), Rectangle.treatAsRectangle(right));
+        }
+
+        throw new java.lang.UnsupportedOperationException();
     }
 
 }

@@ -94,4 +94,16 @@ public interface Point {
     public void setX(double x);
 
     public void setY(double y);
+
+    public static boolean isEqual(Point left, Point right) {
+        if (left.getX() != right.getX()) {
+            return false;
+        }
+
+        if (left.getY() != left.getY()) {
+            return false;
+        }
+
+        return true;
+    }
 }

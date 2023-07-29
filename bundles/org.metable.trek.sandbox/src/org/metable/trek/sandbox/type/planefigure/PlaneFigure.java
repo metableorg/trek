@@ -22,9 +22,9 @@ public interface PlaneFigure {
 
     public static double getArea(PlaneFigure plane) {
         if (Ellipse.instanceOfEllipse(plane)) {
-            return Ellipse.getArea((Ellipse) plane);
-        } else if (plane instanceof Polygon) {
-            return Polygon.getArea((Polygon) plane);
+            return Ellipse.getArea(Ellipse.treatAsEllipse(plane));
+        } else if (Polygon.instanceOfPolygon(plane)) {
+            return Polygon.getArea(Polygon.treatAsPolygon(plane));
         }
 
         throw new java.lang.UnsupportedOperationException();
@@ -43,6 +43,22 @@ public interface PlaneFigure {
     }
 
     public static boolean instanceOfPlaneFigure(Object other) {
-        return other instanceof PlaneFigure;
+        if (Polygon.instanceOfPolygon(other)) {
+            return true;
+        }
+
+        if (Ellipse.instanceOfEllipse(other)) {
+            return true;
+        }
+
+        return PlaneFigure.isType(other);
+    }
+
+    public static boolean isEqual(PlaneFigure left, PlaneFigure right) {
+        if (Polygon.instanceOfPolygon(left)) {
+            return Polygon.isEqual(Polygon.treatAsPolygon(left), Polygon.treatAsPolygon(right));
+        }
+
+        return false;
     }
 }
