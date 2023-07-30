@@ -16,7 +16,7 @@
  *         //
  *         // At least one attribute must be used in this expression.
  *         constraint {
- *             (length > 0) && (width > 0) && (length >= width);
+ *             (length > 0) && (width > 0);
  *         }
  *     }
  *

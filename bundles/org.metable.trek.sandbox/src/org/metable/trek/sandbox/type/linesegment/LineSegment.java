@@ -54,6 +54,10 @@ public interface LineSegment {
 
         return lineSegment;
     }
+    
+    public static boolean instanceOfLineSegment(Object other) {
+        return other instanceof LineSegment;
+    }
 
     public Point getBegin();
 

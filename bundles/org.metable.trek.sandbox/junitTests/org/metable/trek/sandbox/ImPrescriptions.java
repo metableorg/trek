@@ -6,8 +6,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.metable.trek.sandbox.type.Alpha;
 import org.metable.trek.sandbox.type.circle.Circle;
 import org.metable.trek.sandbox.type.ellipse.Ellipse;
+import org.metable.trek.sandbox.type.linesegment.LineSegment;
 import org.metable.trek.sandbox.type.noncircle.NonCircle;
 import org.metable.trek.sandbox.type.planefigure.PlaneFigure;
 import org.metable.trek.sandbox.type.point.Point;
@@ -110,6 +112,43 @@ public class ImPrescriptions {
 
         // Ellipse
         Assert.assertTrue(PlaneFigure.instanceOfPlaneFigure(Ellipse.ellipse()));
+    }
+
+    @Test
+    public void im_prescription_5_propert_and_immediate_subtypes_and_supertypes() {
+        // See the static assertion in SquareImpl to see that Square is a proper subset of rectangle.
+        Assert.assertTrue(Rectangle.instanceOfRectangle(Square.square()));
+    }
+
+    @Test
+    public void im_prescription_6_scalar_root_and_leaf_types() {
+        // PlaneFigure is a root type and Square is not.
+        Assert.assertTrue(Alpha.getSubtypes().contains(PlaneFigure.class));
+        Assert.assertFalse(Alpha.getSubtypes().contains(Square.class));
+
+        // Square is a leaf type and PlaneFigure is not.
+        Assert.assertTrue(Square.getSubtypes().isEmpty());
+        Assert.assertFalse(PlaneFigure.getSubtypes().isEmpty());
+    }
+
+    @Test
+    public void im_prescription_7_disjoint_and_overlapping_types() {
+        // Disjoint types
+        Point p = Point.cartesian();
+        LineSegment l = LineSegment.lineSegment();
+
+        Assert.assertFalse(Point.instanceOfPoint(l));
+        Assert.assertFalse(LineSegment.instanceOfLineSegment(p));
+
+        // Overlapping Types
+        Circle c = Circle.circle();
+        Square s = Square.square();
+
+        Assert.assertTrue(PlaneFigure.instanceOfPlaneFigure(c));
+        Assert.assertTrue(PlaneFigure.instanceOfPlaneFigure(s));
+
+        Assert.assertFalse(Circle.instanceOfCircle(s));
+        Assert.assertFalse(Square.instanceOfSquare(c));
     }
 
     @Before

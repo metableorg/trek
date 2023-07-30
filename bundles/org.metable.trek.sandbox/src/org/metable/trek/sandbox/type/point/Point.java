@@ -76,6 +76,10 @@ public interface Point {
 
         return point;
     }
+    
+    public static boolean instanceOfPoint(Object other) {
+        return other instanceof Point;
+    }
 
     public double getRho();
 
