@@ -52,12 +52,50 @@ public class ImPrescriptions {
     }
 
     @Test
-    public void im_prescription_2_subtypes_are_subsets() {
+    public void im_prescription_2_subtypes_are_subsets_read_only_functions() {
+        // Square
+        double area = PlaneFigure
+                .getArea(Polygon.assign(Rectangle.assign(Square.assign(Square.square(Point.cartesian(), 5)))));
+        Assert.assertEquals(25.0, area, 0.001);
+
+        Rectangle r = Square.assign(Square.square());
+
+        Assert.assertEquals(2.0, r.getLength(), 0.001);
+        Assert.assertEquals(2.0, r.getWidth(), 0.001);
+
+        // Rectangle
+        area = PlaneFigure.getArea(Polygon.assign(Rectangle.assign(Rectangle.rectangle(Point.cartesian(), 10, 30))));
+
+        Assert.assertEquals(300.0, area, 0.001);
+
+        // Circle
+        area = PlaneFigure.getArea(Ellipse.assign(Circle.assign(Circle.circle(5, Point.cartesian()))));
+
+        Assert.assertEquals(78.54, area, 0.001);
+    }
+
+    @Test
+    public void im_prescription_3_subtype_of_is_reflexive() {
+        // Square
+        Assert.assertTrue(Square.instanceOfSquare(Square.square()));
+
+        // Rectangle
+        Assert.assertTrue(Rectangle.instanceOfRectangle(Rectangle.rectangle()));
+
+        // Circle
+        Assert.assertTrue(Circle.instanceOfCircle(Circle.circle()));
+
+        // Ellipse
+        Assert.assertTrue(Ellipse.instanceOfEllipse(Ellipse.ellipse()));
+    }
+
+    @Test
+    public void im_prescription_4_subtype_of_is_transitive() {
         // Square
         Assert.assertTrue(Rectangle.instanceOfRectangle(Square.square()));
         Assert.assertTrue(Polygon.instanceOfPolygon(Square.square()));
         Assert.assertTrue(PlaneFigure.instanceOfPlaneFigure(Square.square()));
-        
+
         // Rectangle
         Assert.assertTrue(Polygon.instanceOfPolygon(Rectangle.rectangle()));
         Assert.assertTrue(PlaneFigure.instanceOfPlaneFigure(Rectangle.rectangle()));
@@ -69,7 +107,7 @@ public class ImPrescriptions {
         // Non-circle
         Assert.assertTrue(Ellipse.instanceOfEllipse(NonCircle.nonCircle()));
         Assert.assertTrue(PlaneFigure.instanceOfPlaneFigure(NonCircle.nonCircle()));
-        
+
         // Ellipse
         Assert.assertTrue(PlaneFigure.instanceOfPlaneFigure(Ellipse.ellipse()));
     }

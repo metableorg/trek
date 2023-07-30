@@ -8,7 +8,7 @@ class RectangleImpl implements Polygon, Rectangle {
     static class Rectangle {
 
         static boolean constraint(Rectangle rectangle) {
-            return (rectangle.length > 0) && (rectangle.width > 0) && (rectangle.length >= rectangle.width);
+            return (rectangle.length > 0) && (rectangle.width > 0);
         }
 
         final Point ctr;
