@@ -151,6 +151,29 @@ public class ImPrescriptions {
         Assert.assertFalse(Square.instanceOfSquare(c));
     }
 
+    @Test
+    public void im_prescription_8_common_subtypes_and_supertypes() {
+
+        // Set of types: Ellipse, Circle
+
+        // Circle is common subtype
+        Assert.assertTrue(Alpha.isSupertypeOf(Circle.class, Circle.class));
+        Assert.assertTrue(Alpha.isSupertypeOf(Ellipse.class, Circle.class));
+
+        // Ellipse and PlaneFigure are common super types
+        Assert.assertTrue(Alpha.isSupertypeOf(Ellipse.class, Ellipse.class));
+        Assert.assertTrue(Alpha.isSupertypeOf(Ellipse.class, Circle.class));
+        Assert.assertTrue(Alpha.isSupertypeOf(PlaneFigure.class, Ellipse.class));
+        Assert.assertTrue(Alpha.isSupertypeOf(PlaneFigure.class, Circle.class));
+
+        // Set of types: Circle, Square, Polygon
+
+        // PlaneFigre is common supertype.
+        Assert.assertTrue(Alpha.isSupertypeOf(PlaneFigure.class, Circle.class));
+        Assert.assertTrue(Alpha.isSupertypeOf(PlaneFigure.class, Square.class));
+        Assert.assertTrue(Alpha.isSupertypeOf(PlaneFigure.class, Polygon.class));
+    }
+
     @Before
     public void setUp() throws Exception {
     }

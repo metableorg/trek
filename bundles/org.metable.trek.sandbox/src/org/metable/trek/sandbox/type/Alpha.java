@@ -2,7 +2,6 @@ package org.metable.trek.sandbox.type;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.metable.trek.sandbox.type.linesegment.LineSegment;
@@ -10,21 +9,14 @@ import org.metable.trek.sandbox.type.planefigure.PlaneFigure;
 import org.metable.trek.sandbox.type.point.Point;
 import org.metable.trek.sandbox.type.weight.Weight;
 
+@SuppressWarnings("unchecked")
 public interface Alpha {
-    @SuppressWarnings("unchecked")
     private static Class<?> getMostSpecificType(Class<?> type, Object value) {
 
-        List<Class<?>> subtypes = Collections.emptyList();
+        final List<Class<?>> subtypes = getSubtypes(type);
 
-        try {
-            Method getSubTypes = type.getMethod("getSubtypes");
-            subtypes = (List<Class<?>>) getSubTypes.invoke(null);
-        } catch (RuntimeException | ReflectiveOperationException e) {
-            throw new RuntimeException("Failed to invoke getSubtypes method", e);
-        }
-
-        for (Class<?> subType : subtypes) {
-            Class<?> result = getMostSpecificType(subType, value);
+        for (Class<?> subtype : subtypes) {
+            Class<?> result = getMostSpecificType(subtype, value);
 
             if (result != null) {
                 return result;
@@ -44,6 +36,42 @@ public interface Alpha {
 
     public static List<Class<?>> getSubtypes() {
         return Arrays.asList(PlaneFigure.class, Point.class, Weight.class, LineSegment.class);
+    }
+
+    private static List<Class<?>> getSubtypes(Class<?> type) {
+        try {
+            Method getSubtypes = type.getMethod("getSubtypes");
+            return (List<Class<?>>) getSubtypes.invoke(null);
+        } catch (RuntimeException | ReflectiveOperationException e) {
+            throw new RuntimeException("Failed to invoke getSubtypes method", e);
+        }
+    }
+
+    /**
+     * @param type1 the first type
+     * 
+     * @param type2 the second type
+     * 
+     * @return true if the first type is a supertype of the second type.
+     */
+    public static boolean isSupertypeOf(Class<?> type1, Class<?> type2) {
+        if (type1 == type2) {
+            return true;
+        }
+
+        final List<Class<?>> subtypes = getSubtypes(type1);
+
+        if (subtypes.contains(type2)) {
+            return true;
+        }
+
+        for (Class<?> subtype : subtypes) {
+            if (isSupertypeOf(subtype, type2)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static boolean isType(Object alpha) {
