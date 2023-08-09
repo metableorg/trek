@@ -1,9 +1,7 @@
 package org.metable.trek.sandbox;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.metable.trek.sandbox.type.Alpha;
@@ -28,7 +26,7 @@ public class ImPrescriptions {
     }
 
     @Test
-    public void im_prescription_1_types_are_sets() {
+    public void im_prescription_01_types_are_sets() {
         // Arrange.
         Rectangle r = Rectangle.rectangle(Point.cartesian(), 30, 30);
         Square s1 = Square.square(Point.cartesian(), 30);
@@ -54,7 +52,7 @@ public class ImPrescriptions {
     }
 
     @Test
-    public void im_prescription_2_subtypes_are_subsets_read_only_functions() {
+    public void im_prescription_02_subtypes_are_subsets_read_only_functions() {
         // Square
         double area = PlaneFigure
                 .getArea(Polygon.assign(Rectangle.assign(Square.assign(Square.square(Point.cartesian(), 5)))));
@@ -77,7 +75,7 @@ public class ImPrescriptions {
     }
 
     @Test
-    public void im_prescription_3_subtype_of_is_reflexive() {
+    public void im_prescription_03_subtype_of_is_reflexive() {
         // Square
         Assert.assertTrue(Square.instanceOfSquare(Square.square()));
 
@@ -92,7 +90,7 @@ public class ImPrescriptions {
     }
 
     @Test
-    public void im_prescription_4_subtype_of_is_transitive() {
+    public void im_prescription_04_subtype_of_is_transitive() {
         // Square
         Assert.assertTrue(Rectangle.instanceOfRectangle(Square.square()));
         Assert.assertTrue(Polygon.instanceOfPolygon(Square.square()));
@@ -115,13 +113,13 @@ public class ImPrescriptions {
     }
 
     @Test
-    public void im_prescription_5_propert_and_immediate_subtypes_and_supertypes() {
+    public void im_prescription_05_propert_and_immediate_subtypes_and_supertypes() {
         // See the static assertion in SquareImpl to see that Square is a proper subset of rectangle.
         Assert.assertTrue(Rectangle.instanceOfRectangle(Square.square()));
     }
 
     @Test
-    public void im_prescription_6_scalar_root_and_leaf_types() {
+    public void im_prescription_06_scalar_root_and_leaf_types() {
         // PlaneFigure is a root type and Square is not.
         Assert.assertTrue(Alpha.getSubtypes().contains(PlaneFigure.class));
         Assert.assertFalse(Alpha.getSubtypes().contains(Square.class));
@@ -132,7 +130,7 @@ public class ImPrescriptions {
     }
 
     @Test
-    public void im_prescription_7_disjoint_and_overlapping_types() {
+    public void im_prescription_07_disjoint_and_overlapping_types() {
         // Disjoint types
         Point p = Point.cartesian();
         LineSegment l = LineSegment.lineSegment();
@@ -152,7 +150,7 @@ public class ImPrescriptions {
     }
 
     @Test
-    public void im_prescription_8_common_subtypes_and_supertypes() {
+    public void im_prescription_08_common_subtypes_and_supertypes() {
 
         // Set of types: Ellipse, Circle
 
@@ -168,17 +166,22 @@ public class ImPrescriptions {
 
         // Set of types: Circle, Square, Polygon
 
-        // PlaneFigre is common supertype.
+        // Plane Figure is common supertype.
         Assert.assertTrue(Alpha.isSupertypeOf(PlaneFigure.class, Circle.class));
         Assert.assertTrue(Alpha.isSupertypeOf(PlaneFigure.class, Square.class));
         Assert.assertTrue(Alpha.isSupertypeOf(PlaneFigure.class, Polygon.class));
     }
 
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
+    @Test
+    public void im_prescription_09_model_of_a_scalar_variable() {
+        Ellipse e = Ellipse.ellipse();
+        Circle c = Circle.circle();
+        
+        e = Circle.assign(c);
+        
+        // Declared type of e is Ellipse.
+        
+        Assert.assertTrue(e instanceof Ellipse);
+        Assert.assertEquals(Circle.class, Alpha.getMostSpecificType(e));
     }
 }
