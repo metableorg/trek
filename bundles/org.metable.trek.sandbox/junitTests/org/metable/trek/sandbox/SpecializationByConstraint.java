@@ -10,6 +10,7 @@ import org.metable.trek.sandbox.type.point.Point;
 import org.metable.trek.sandbox.type.rectangle.Rectangle;
 import org.metable.trek.sandbox.type.square.Square;
 
+// IM prescription 10
 public class SpecializationByConstraint {
 
     @Test(expected = java.lang.ClassCastException.class)

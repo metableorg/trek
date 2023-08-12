@@ -184,4 +184,18 @@ public class ImPrescriptions {
         Assert.assertTrue(e instanceof Ellipse);
         Assert.assertEquals(Circle.class, Alpha.getMostSpecificType(e));
     }
+
+    @Test
+    public void im_prescription_11_assignment_with_inheritance() {
+        Ellipse e = Ellipse.ellipse();
+        Circle c = Circle.circle();
+        c.setR(20.0);
+        
+        // e := c
+        
+        e = Circle.assign(c);
+        
+        // r = the_r(treat_as_circle(e)) 
+        Assert.assertEquals(20.0, Circle.treatAsCircle(e).getR(), 0.001);
+    }
 }
